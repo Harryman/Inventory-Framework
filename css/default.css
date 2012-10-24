@@ -152,10 +152,6 @@ header, section, footer, aside, nav, article, figure {
     float: right;
 }
 
-.parent{
-    border-left: 1px solid white;
-    padding-left: 0px;
-}
 .pad{
     padding-left:7px;
 }
@@ -168,7 +164,3 @@ header, section, footer, aside, nav, article, figure {
 input{
     font-size: 16px;
 }
-
-/* div > .ui-widget-header{
-    margin-left: -5px;
-} */
