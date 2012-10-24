@@ -15,9 +15,9 @@ class Documentation extends \libs\Controller {
     function index(){
         $this->view->index();    
     }
-    function view($id, $term = false){
+    function view($id, $no_term = "false"){
         require 'views/header.php';
-        if($term != "true"){
+        if($no_term == "false"){
             $id = $this->model->term($id);
         }
         $this->view->search();

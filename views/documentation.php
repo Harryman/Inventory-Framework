@@ -29,7 +29,7 @@ class Documentation extends \libs\View {
             $(\"#search_document  #search_submit\").button();
             $(\"#search_document  #search_submit\").click(function(){
                doc_ac = $(\"#search_document  #search\").val();
-                window.location = \"".URL."documentation/view/\"+doc_ac+\"/true\" ;
+                window.location = \"".URL."documentation/view/\"+doc_ac ;
             });
             });
             </script>";
