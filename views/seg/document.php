@@ -43,7 +43,7 @@ $(function(){";
 
     $(\"#".$id." > #document > #buttons > #submit\").click(function(){
         var isgood = $(\"#".$id." > #document > #form > form > #namespace\").val();
-        if(isgood != \"\"){
+        if(isgood !== undefined){ 
             $.ajax({
                 type: 'POST',
                 data: $(\"#".$id." > #document > #form form\").serialize(),

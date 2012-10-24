@@ -30,16 +30,14 @@ class Documentation extends \libs\Controller {
     }
     function add(){
         $this->document = new cs\Document();
-       // $this->view->search();
         require 'views/header.php';
-                $this->view->search();
+        $this->view->search();
         $this->document->input();
         require 'views/footer.php';
     }
     function search(){
-          require 'views/header.php';
-                $this->view->search();
-    //    $this->document->input();
+        require 'views/header.php';
+        $this->view->search();
         require 'views/footer.php';
     }
 
