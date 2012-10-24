@@ -48,7 +48,8 @@ class Bootstrap {
             } else {
                 $controller->index();
             }
-        } else {
+        } 
+        else {
 
             $file = 'controllers/' . $url[0] . '.php';
             if (file_exists($file)) {
@@ -61,22 +62,31 @@ class Bootstrap {
          //   $controller->loadModel($url[0]);
 
             // calling methods
-            if (isset($url[2])) {
+            if (isset($url[1])) {
                 if (method_exists($controller, $url[1])) {
-                    $controller->{$url[1]}($url[2]);
-                } else {
-                    $this->error("url2 isset, url1 method does't exsist");
-                }
-            } else {
-                if (isset($url[1])) {
-                    if (method_exists($controller, $url[1])) {
-                        $controller->{$url[1]}();
-                    } else {
-                        $this->error("url1 isset, url1 meth doesn't exsist");
+                    if (isset($url[4])) {
+                        $controller->{$url[1]}($url[2], $url[3], $url[4]);
+                    } 
+                    else {
+                        if (isset($url[3])) {
+                            $controller->{$url[1]}($url[2], $url[3]);
+                        } 
+                        else {
+                            if (isset($url[2])) {
+                                $controller->{$url[1]}($url[2]);
+                            } 
+                            else {
+                                $controller->$url[1]();
+                            }
+                        }
                     }
-                } else {
-                    $controller->index();
+                } 
+                else {
+                    $this->error("the method " . $url[1] . " doesn't exsist");
                 }
+            } 
+            else {
+                $controller->index();   
             }
         }
     }
