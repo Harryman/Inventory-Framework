@@ -1,0 +1,44 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div><form enctype="url.encode">Namespace<input type="text" name="namespace" placeholder="/name/space" required="true"/><br/>
+                <textarea  cols="250" rows="3" name="description" placeholder="Describe the class's use"/> </form></div>
+    </body>
+    <div id="document" class="ui-widget-content ui-corner-all">
+                <h2 id="namespace" class="ui-widget-header ui-corner-all"></h2>
+                <div id="data" class="fltlft">
+                    <p id="description">Description: </p>
+                </div>
+                <div id="buttons">
+                    <div id="edit" title="Edit">
+                    <script>
+                    $(function(){
+                        $.get("<?  echoURL;?>seg/document/get/<?  echo$id;?>",function(data){
+                            $("#<?  echo$rapt;?> > #document > #namespace ").text(data.namespace);
+                            $("#<?  echo$rapt;?> > #document  #description ").append(data.description);
+                        });
+                                
+                        $("#<?  echo$rapt;?> > #document > #buttons > #edit").button({
+                            icons:{
+                                primary: "ui-icon-gear"
+                            },
+                            text: false
+                        });
+                        $("#<?  echo$rapt;?> > #document > #buttons > #edit").click(function(){
+                            $.get("<?  echoURL;?>seg/document/input/<?  echo$id;?>",function(ret){
+                                $("#<?  echo$rapt;?>").replaceWith(ret);
+                                    $("#<?  echo$id;?> #edit").click();
+                            });
+                        });
+                    });
+
+                   </script>
+</html>
