@@ -17,10 +17,11 @@ class Document extends \libs\View {
             echo "<div id=\"".$id ."\" >
                     <div id=\"document\" class=\"text ui-widget-content ui-corner-all\"> 
                     <h1 class=\"ui-widget-header ui-corner-all\">Document</h3>
-                    <div id=\"form\" style=\"float:left;\">
+                    <div id=\"form\" class=\"fltlft\">
                         <form><p>Namespace:
                             <input type=\"text\" name=\"namespace\" id=\"namespace\" placeholder=\"/name/space\" required=\"true\"/ class=\"text ui-widget-content ui-corner-all\"><br/>Description:<br/>
-                            <textarea  cols=\"75\" rows=\"3\" name=\"description\" id=\"description\" placeholder=\"Describe the class's use\"class=\"text ui-widget-content ui-corner-all\"></textarea></p>
+                            <textarea  cols=\"75\" rows=\"3\" name=\"description\" id=\"description\" placeholder=\"Describe the class's use\"class=\"text ui-widget-content ui-corner-all\"></textarea><br/>Code:<br/>
+                            <textarea cols=\"75\" rows=\"10\" name=\"code\" id=\"code\" placeholder=\"Copy full code here\" class=\" text ui-widget-content ui-corner-all\"></textarea></p>
                         </form>
                     </div>
                     <div id=\"buttons\">
@@ -33,6 +34,7 @@ $(function(){";
                   $.get(\"".URL."seg/document/get/\"+id, function(data){              
                          $(\"#\"+id+\" > #document > #form  #namespace\").val(data.namespace);
                          $(\"#\"+id+\" > #document > #form  #description\").val(data.description);
+                         $(\"#\"+id+\" > #document > #form  #code \").text(data.code);
                   });";
             }
             else{
@@ -42,8 +44,8 @@ $(function(){";
     $(\"#".$id." > #document > #buttons div\").button();
 
     $(\"#".$id." > #document > #buttons > #submit\").click(function(){
-        var isgood = $(\"#".$id." > #document > #form > form > #namespace\").val();
-        if(isgood !== undefined){ 
+        var isgood = $(\"#".$id." > #document > #form #namespace\").val();
+        if(isgood !=\"\"){ 
             $.ajax({
                 type: 'POST',
                 data: $(\"#".$id." > #document > #form form\").serialize(),
@@ -102,18 +104,32 @@ $(function(){";
         echo"<div id=\"document\" class=\"ui-widget-content ui-corner-all\">
                 <h2 id=\"namespace\" class=\"ui-widget-header ui-corner-all\"></h2>
                 <div id=\"data\" class=\"fltlft\">
-                    <p id=\"description\">Description: </p>
+                    <p id=\"description\">Description: </p><br>
+                    Code: <div class=\"child\" id=\"toggle_code\"></div><br/>
+                    <div id=\"code\" class=\"code\" style=\"display: none\">no code here</div>                
                 </div>
                 <div id=\"buttons\">
-                    <div id=\"edit\" title=\"Edit\">edit
+                    <div class=\"mar-left\" id=\"edit\" title=\"Edit\">edit
                    
                    </div>
                </div>
                 <script>
                     $(function(){
                         $.get(\"".URL."seg/document/get/".$id."\",function(data){
-                            $(\"#".$rapt." > #document > #namespace \").text(data.namespace);
-                            $(\"#".$rapt." > #document  #description \").append(data.description);
+                            $(\"#".$rapt." > #document > h2#namespace \").text(data.namespace);
+                            $(\"#".$rapt." > #document > #data  #description \").append(data.description);
+                            $(\"#".$rapt." > #document > #data >#code \").text(data.code);
+                        });
+                        $(\"#".$rapt." > #document > #data #toggle_code\").button();
+                        $(\"#".$rapt." > #document > #data #toggle_code\").text(\"show\");
+                        $(\"#".$rapt." > #document > #data #toggle_code\").click(function(){
+                            $(\"#".$rapt." > #document > #data > #code \").toggle(\"blind\",350);
+                                if($(\"#".$rapt." > #document > #data #toggle_code\").text() == \"show\"){
+                                    $(\"#".$rapt." > #document > #data #toggle_code\").text(\"hide\");
+                                }
+                                else{
+                                $(\"#".$rapt." > #document > #data #toggle_code\").text(\"show\");
+                                }
                         });
                                 
                         $(\"#".$rapt." > #document > #buttons > #edit\").button({
