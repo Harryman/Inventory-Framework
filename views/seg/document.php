@@ -109,9 +109,7 @@ $(function(){";
                     <div id=\"code\" class=\"code\" style=\"display: none\">no code here</div>                
                 </div>
                 <div id=\"buttons\">
-                    <div class=\"mar-left\" id=\"edit\" title=\"Edit\">edit
-                   
-                   </div>
+                    <div class=\"mar-left\" id=\"edit\" title=\"Edit\"></div>
                </div>
                 <script>
                     $(function(){
