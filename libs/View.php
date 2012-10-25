@@ -32,7 +32,7 @@ class View {
         return $id;
         }
         protected function Start($id,$table,$title,$buttons = false,$fkey = false){
-             if ($id == "rand") {
+        if ($id == "rand") {
             $noid = true;
             $id = mt_rand();
         }
@@ -49,8 +49,15 @@ class View {
         }
         echo"</div></h2>
             <div class=\"clearfloat\"></div>
-                <div id=\"data\">
-                <form>";
+                <div id=\"data\ class=\"mar-left\">
+                <script>
+                $(function(){
+                ";
+        if($buttons != false){
+            echo "var btns = $.parseJSON(\'".json_encode($buttons)."\');";
+            echo "startButton(\"".$id."\",\"".$table."\", btns);";
+        }
+                   " <form>";
         return $id;
         }
         

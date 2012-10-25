@@ -1,30 +1,26 @@
 <html>
     <head>
-        <?php require 'config/paths.php';?>
-        <script src="<?php echo URL; ?>jquery/jquery-1.8.2.min.js" ></script>
-
+        <? require_once("/config/paths.php");?> 
+        <link rel="stylesheet" href="<? echo URL;?>jqueryui/css/custom-theme/jquery-ui-1.9.0.custom.min.css"/>
+        <link rel="stylesheet" href="<?= URL;?>css/default.css"/>
+        <script src="<? echo URL;?>jquery/jquery-1.8.2.min.js"></script>
+        <script src="<? echo URL;?>jqueryui/js/jquery-ui-1.9.0.custom.min.js"></script>
+        <script>$.uiBackCompat = false;</script>
+        <script src="<?=URL;?>js/common.js"></script>
+    </head>
     <body>
-        <div> this is div</div>
-        <?php
+        <? $array = array("add","edit","delete","submit");
+ $out = json_encode($array,JSON_FORCE_OBJECT);
+ var_dump($array); 
+ var_dump($out);
+ echo"<script>var out = ".$out.";
+     
+     $.each(out, function(i,val){
+     alert(val)
+     });
+     </script>";
         ?>
-        <script> alert("this is stupid");</script>
-        <script>
-            alert("we are really fucked");
-            $.get('<?php echo URL; ?>addpart/other',function(ret){
-                alert(ret);
-            });
-           // })
-           // $(function(){
-            //    $.ajax({
-             //       url: '<?php echo URL; ?>addpart/other',
-             //       success:function(ret){
-              //         alert(ret);
-               //      }
-              //  });
-            //           alert("its fucked");
-            //}
-                 
-        </script>
-    </body>
-</html>
-
+        <div id="header"></div>
+        <div class="container" id="content">
+        </body>
+        </html>
