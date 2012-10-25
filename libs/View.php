@@ -54,8 +54,9 @@ class View {
                 $(function(){
                 ";
         if($buttons != false){
-            echo "var btns = $.parseJSON(\'".json_encode($buttons)."\');";
-            echo "startButton(\"".$id."\",\"".$table."\", btns);";
+            echo "var btns = $.parseJSON(\'".json_encode($buttons, JSON_FORCE_OBJECT)."\');";
+            echo "startButton(\"".$id."\",\"".$table."\", btns);
+                </script>";
         }
                    " <form>";
         return $id;
