@@ -105,7 +105,7 @@ $(function(){";
                 <h2 id=\"namespace\" class=\"ui-widget-header ui-corner-all\"></h2>
                 <div id=\"data\" class=\"fltlft\">
                     <p id=\"description\" class=\"textformat\">Description: </p><br>
-                    Code: <div class=\"child\" id=\"toggle_code\"></div><br/>
+                    Code: <div class=\"mar-left\" id=\"toggle_code\"></div><br/>
                     <div id=\"code\" class=\"code\" style=\"display: none\">no code here</div>                
                 </div>
                 <div id=\"buttons\">
