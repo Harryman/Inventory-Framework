@@ -3,7 +3,6 @@ namespace libs;
 class View {
 
 	function __construct() {
-		//echo 'this is the view';
 	}
 
 	public function render($name, $noInclude = false)
@@ -17,5 +16,22 @@ class View {
 			require 'views/footer.php';	
 		}
 	}
+        protected function inputStart($id, $table){
+            if ($id == "rand") {
+            $noid = true;
+            $id = mt_rand();
+        }
+        else{
+            $noid = false;
+        }
+        echo "<div id=\"".$id ."\" >
+                <div id=\"".$table."\" class=\"text ui-widget-content ui-corner-all\"> 
+                <h1 class=\"ui-widget-header ui-corner-all\">".$table."</h3>
+                <div id=\"form\" class=\"fltlft\">
+                <form><p>";
+        return $id;
+        }
+        
+
 
 }
