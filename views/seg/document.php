@@ -2,31 +2,32 @@
 namespace views\seg;
 class Document extends \libs\View {
 
-    function __construct() {
+    protected $table = "document";
+    protected $id = null;
+    function __construct($idr){
         parent::__construct();
+        $this->id = $idr;
+    }
+    
+    function add(){
+        $this->start("Document");
+        $this->scriptStart();
+        $btn1 = $this->newBtns("1"," h2 > .buttons");
+        $this->
+        $this->endScript();
+        $this->edit();
+        $this->close();
+    }
+    function edit(){
+        $this->dataStart();
+        $this->inputField()
+        
+        
     }
     
     function input($id){
-        if ($id == "rand") {
-            $noid = true;
-            $id = mt_rand();
-        }
-        else{
-            $noid = false;
-        }
-            echo "<div id=\"".$id ."\" >
-                    <div id=\"document\" class=\"text ui-widget-content ui-corner-all\"> 
-                    <h1 class=\"ui-widget-header ui-corner-all\">Document</h3>
-                    <div id=\"form\" class=\"fltlft\">
-                        <form><p>Namespace:
-                            <input type=\"text\" name=\"namespace\" id=\"namespace\" placeholder=\"/name/space\" required=\"true\"/ class=\"text ui-widget-content ui-corner-all\"><br/>Description:<br/>
-                            <textarea  cols=\"75\" rows=\"3\" name=\"description\" id=\"description\" placeholder=\"Describe the class's use\"class=\"text ui-widget-content ui-corner-all\"></textarea><br/>Code:<br/>
-                            <textarea cols=\"75\" rows=\"10\" name=\"code\" id=\"code\" placeholder=\"Copy full code here\" class=\" text ui-widget-content ui-corner-all\"></textarea></p>
-                        </form>
-                    </div>
-                    <div id=\"buttons\">
-                        <div id=\"addfunc\"> Add a Function</div>
-                        <div id=\"submit\" >Submit</div>
+        echo $this->Start($id, "document", "Document", ["add","delete","cancel","save"]);
+
                                     <script>
 $(function(){";
             if($noid==false){
@@ -41,9 +42,9 @@ $(function(){";
                 echo"var id;";
             }
             echo"
-    $(\"#".$id." > #document > #buttons div\").button();
+    $(\"#".$id." > #document > .buttons div\").button();
 
-    $(\"#".$id." > #document > #buttons > #submit\").click(function(){
+    $(\"#".$id." > #document > .buttons > #submit\").click(function(){
         var isgood = $(\"#".$id." > #document > #form #namespace\").val();
         if(isgood !=\"\"){ 
             $.ajax({
@@ -108,7 +109,7 @@ $(function(){";
                     Code: <div class=\"mar-left\" id=\"toggle_code\"></div><br/>
                     <div id=\"code\" class=\"code\" style=\"display: none\">no code here</div>                
                 </div>
-                <div id=\"buttons\">
+                <div class=\"buttons\">
                     <div class=\"mar-right\" id=\"edit\" title=\"Edit\"></div>
                </div>
                 <script>
@@ -130,13 +131,13 @@ $(function(){";
                                 }
                         });
                                 
-                        $(\"#".$rapt." > #document > #buttons > #edit\").button({
+                        $(\"#".$rapt." > #document > .buttons > #edit\").button({
                             icons:{
                                 primary: \"ui-icon-gear\"
                             },
                             text: false
                         });
-                        $(\"#".$rapt." > #document > #buttons > #edit\").click(function(){
+                        $(\"#".$rapt." > #document > .buttons > #edit\").click(function(){
                             $.get(\"".URL."seg/document/input/".$id."\",function(ret){
                                 $(\"#".$rapt."\").replaceWith(ret);
                                     $(\"#".$id." #edit\").click();

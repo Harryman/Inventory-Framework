@@ -23,7 +23,7 @@ class TEMPLATE extends \libs\View {
                             <textarea  cols=\"75\" rows=\"3\" name=\"description\" id=\"description\" placeholder=\"Describe the class's use\"class=\"text ui-widget-content ui-corner-all\"></textarea></p>
                         </form>
                     </div>
-                    <div id=\"buttons\">
+                    <div class=\"buttons\">
                         <div id=\"addfunc\"> Add a Function</div>
                         <div id=\"submit\" >Submit</div>
                                     <script>
@@ -39,9 +39,9 @@ $(function(){";
                 echo"var id;";
             }
             echo"
-    $(\"#".$id." > #TEMPLATE > #buttons div\").button();
+    $(\"#".$id." > #TEMPLATE > .buttons div\").button();
 
-    $(\"#".$id." > #TEMPLATE > #buttons > #submit\").click(function(){
+    $(\"#".$id." > #TEMPLATE > .buttons > #submit\").click(function(){
         var isgood = $(\"#".$id." > #TEMPLATE > #form > form > #namespace\").val();
         if(isgood != \"\"){
             $.ajax({
@@ -102,7 +102,7 @@ $(function(){";
                 <div id=\"data\" class=\"fltlft\">
                     <p id=\"description\">Description: </p>
                 </div>
-                <div id=\"buttons\">
+                <div class=\"buttons\">
                     <div id=\"edit\" class=\"ui-state-default ui-corner-all\" title=\"Edit\">
                     <span class=\"ui-icon ui-icon-gear\"></span>
                     <script>
@@ -112,8 +112,8 @@ $(function(){";
                             $(\"#".$rapt." > #TEMPLATE  #description \").append(data.description);
                         });
                                 
-                        $(\"#".$rapt." > #TEMPLATE > #buttons > #edit\").button();
-                        $(\"#".$rapt." > #TEMPLATE > #buttons > #edit\").click(function(){
+                        $(\"#".$rapt." > #TEMPLATE > .buttons > #edit\").button();
+                        $(\"#".$rapt." > #TEMPLATE > .buttons > #edit\").click(function(){
                             $.get(\"".URL."seg/TEMPLATE/input/".$id."\",function(ret){
                                 $(\"#".$rapt."\").replaceWith(ret);
                                     $(\"#".$id." #edit\").click();

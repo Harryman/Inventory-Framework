@@ -16,55 +16,47 @@ class View {
 			require 'views/footer.php';	
 		}
 	}
-        protected function inputStart($id, $table, $fkey = false){
-            if ($id == "rand") {
+        
+        function start($title){
+        if($this->id == "rand"){
             $noid = true;
-            $id = mt_rand();
+            $this->id = mt_rand();
         }
         else{
             $noid = false;
         }
-        echo "<div id=\"".$id ."\" >
-                <div id=\"".$table."\" class=\"text ui-widget-content ui-corner-all\"> 
-                <h2 class=\"ui-widget-header ui-corner-all\">".$table."</h2>
-                <div id=\"form\" class=\"fltlft\">
-                <form><p>";
-        return $id;
-        }
-        protected function Start($id,$table,$title,$buttons = false,$fkey = false){
-        if ($id == "rand") {
-            $noid = true;
-            $id = mt_rand();
-        }
-        else{
-            $noid = false;
-        }
-        echo "<div id=\"".$id ."\" >
-                <div id=\"".$table."\" class=\"text ui-widget-content ui-corner-all\"> 
-                <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div id=\"buttons\">";
-        if($buttons != false){
-            foreach($buttons as $but){
-                echo"<div id=\"".$but."\"></div>";
-            }
-        }
+        echo "<div id=\"".$this->id ."\" >
+                <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\"> 
+                <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">";
         echo"</div></h2>
-            <div class=\"clearfloat\"></div>
-                <div id=\"data\ class=\"mar-left\">
-                <script>
-                $(function(){
-                ";
-        if($buttons != false){
-            echo "var btns = $.parseJSON(\'".json_encode($buttons, JSON_FORCE_OBJECT)."\');";
-            echo "startButton(\"".$id."\",\"".$table."\", btns);
-                </script>";
-        }
-                   " <form>";
-        return $id;
+            <div class=\"clearfloat\"></div>";
         }
         
-        protected function inputField($name, $type, $label, $button = false, $placeholder = false, $option= false ){
+        function dataStart(){
+            echo"<div id=\"data\" class=\"mar-laft\">
+                <form>";
+        }
+        function scriptStart(){
+            echo "<script>
+                $(function){"
+        }
+        function scriptEnd(){
+            echo"});</script>";
+        }
+        function btnAdd($handle,$callback, $title, $fkey = null){
+            echo $handle.".add(\"".$callback."\",\"".$title."\",\"".$fkey."\");"
+        }
+            
+        }
+        function newBtns($inst, $container){
+            $handle = $this->id+$this->table+$inst;
+            echo $handle." = new btset(\"".$this->id."\",\"".$this->table."\",\"".$container."\")";
+            return $handle;
+            
+        }
+        function inputField($name, $type, $label, $button = false, $placeholder = false, $option= false ){
             if($type == "text"){
-                echo $label." <input id=\"".$name."\" type=\"text\" name=\"".$name."\"";
+                echo "<div id=\"".$name."\"> ".$label." <input id=\"".$name."\" type=\"text\" name=\"".$name."\"";
                 if($placeholder != false){
                     echo"placeholder=\"".$placeholder."\"";
                 }
@@ -72,7 +64,19 @@ class View {
                     echo $option;
                 }
                 echo "class=\"text ui-widget-content ui-corner-all\"><br/>";   
-            }              
-        }
+            }
+            if($buttons != false){
+                echo"<div class=\"buttons\">";
+                foreach($button as $but){
+                    echo "<div id=\"".$but."\" title=\"".$but."\"></div>
+                        ";
+                }
+                echo "</div>
+                    <div class=\"clearfloat\">
+                    <script>
+                        $(function(){
+                            bt
+                }
+        }*/
 
 }

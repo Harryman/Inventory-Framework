@@ -148,7 +148,7 @@ header, section, footer, aside, nav, article, figure {
 	display: block;
 	width: auto;
 }
-#buttons{
+.buttons{
     float: right;
 }
 

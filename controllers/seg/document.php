@@ -2,16 +2,32 @@
 namespace controllers\seg;
 class Document extends \libs\Controller {
 
+    protected $table = "document";
+    
     function __construct() {
         parent::__construct();
         $this->documentM = new \models\seg\Document();
-        $this->documentV = new \views\seg\Document();
+        
     }
     function index(){
     }
     //view builders 
     function input($id = "rand"){
         $this->documentV->input($id);
+    }
+    
+    function add($id){
+        $this->documentV = new \views\seg\Document($id);
+        
+    }
+    function edit(){
+        
+    }
+    function data(){
+        
+    }
+    function delete(){
+        
     }
  
     public function get($id){
