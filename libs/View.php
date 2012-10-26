@@ -23,12 +23,12 @@ class View {
             $this->id = mt_rand();
         }
         else{
-            $noid = false;
+            $this->noid = false;
         }
         echo "<div id=\"".$this->id ."\" >
                 <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\"> 
                 <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">";
-        echo"</div></h2>
+        echo"</div></h2><div id=\"validate-msg\"></div>
             <div class=\"clearfloat\"></div>";
         }
         
@@ -36,15 +36,29 @@ class View {
             echo"<div id=\"data\" class=\"mar-laft\">
                 <form>";
         }
+        function dataEnd(){
+            echo"</form></div>"
+        }
         function scriptStart(){
-            echo "<script>
-                $(function){"
+            echo "<script>$(function){";
         }
         function scriptEnd(){
             echo"});</script>";
         }
         function btnAdd($handle,$callback, $title, $fkey = null){
-            echo $handle.".add(\"".$callback."\",\"".$title."\",\"".$fkey."\");"
+            echo $handle.".add(\"".$callback."\",\"".$title."\",\"".$fkey."\");";
+        }
+        function btnEdit($handle){
+            echo $handle.".edit();";
+        }
+        function btnCancel($handle){
+            echo $handle.".cancel();";
+        }
+        function btnSave($handle){
+            echo $handle."save();";
+        }
+        function btnDel($handle){
+            echo $handle".del();";
         }
             
         }

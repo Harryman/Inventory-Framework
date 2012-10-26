@@ -1,9 +1,14 @@
-function Btnset(id,table,container){
-    this.id = id;
+function Btnset(idr,table,container,noid){
+    if(idr != "rand"){
+        this.id = idr;
+    }
+    else{
+    this.id;
+    }
     this.table = table;
     this.container = container;
-    this.btncon = "#"+id+" > #"+table+" > "+container;
-    this.seccon = "#"+id+" > #"+table;
+    this.btncon = "#"+idr+" > #"+table+" > "+container;
+    this.seccon = "#"+idr+" > #"+table;
     $(this.btncon).buttonset();
 }
 
@@ -26,15 +31,16 @@ Btnset.prototype.add = function(callback, title, fkey){
         text: false
     });
      $(btn).click(function(){
-         if(!fkey){
+         if(!this.addFkey){
                 $.ajax({
                     type: 'POST',
                     data: $("#"+this.id+" > #"+this.table+" > #form form").serialize(),
-                    url: url+"seg/"+this.table+"/insert/"+id,
+                    url: url+"seg/"+this.table+"/save/",
                     success: function(data){
                         $.get(url+"seg/"+callback+"/add/rand/"+data, function(seg){
                             $(this.seccon).append(seg);
                         });
+                        this.addFkey = data;
                     }
                 }); 
          }
@@ -85,7 +91,7 @@ Btnset.prototype.cancel = function(){
 }
 
 Btnset.prototype.del = function(){
-        $(this.btncon).append("<div id=\"delete\" title=\"delete\"></div>");
+    $(this.btncon).append("<div id=\"delete\" title=\"delete\"></div>");
     btn = this.btncon+" > #delete";
     $(btn).button({
         icons:{
@@ -93,25 +99,55 @@ Btnset.prototype.del = function(){
         },
         text: false
     });
-    $(btn).click(function(){
+    $(btn).click(function(){//add dialogbox and validation 
         $.get(url+"seg/"+this.table+"/delete/"+this.id ,function(data){
-            $(this.seccon+" > #data").replaceWith(data);
         });
-        $(this.btncon).children().remove();
-        this.del(id);
-        this.cancel(id);
-        this.add(this.addCallback,this.addTitle,this.addFkey);
-        this.submit(id);   
-    });        
+        $.get(url+"seg/"+this.table+"/add/",function(data){
+            $("#"+this.id).replaceWith(data);
+        });   
+    });
 }
+Btnset.prototype.save = function(){
+     $(this.btncon).append("<div id=\"save\" title=\"save\"></div>");
+    btn = this.btncon+" > #save";
+    $(btn).button({
+        icons:{
+            primary: icons.save
+        },
+        text: false
+    });
+    $(btn).click(function(){
+        //isgood = validator(valids);
+        //if(isgood === true){
+            $.get(url+"seg/"+this.table+"/save/"+this.id ,function(data){
+
+            });
+            $.get(url+"seg/"+this.table+"/add/",function(data){
+                $("#"+this.id).replaceWith(data);
+            });
+      //  }
+        //else{
+          //  $("#validate-message").text().replaceWith(isgood.message);
+            //dialog box goes here
+       // }
+    });
 }
 
+Btnset.prototype.validator = function(toCheck){
+    //write this shit later 
+}
+    /*
+function validator(toCheck){
+    
+    else{
+    return true;
+    }
+}
 function inhrt(o){
     function F(){};
     F.prototype = o;
     return new F();
 }
-
 function startButton(id, table, add, btns){
     $("#"+id+" > "+table+" > h2 > .buttons").buttonset();
     $.each(btns, function(i, val){
@@ -137,4 +173,4 @@ function startButton(id, table, add, btns){
          })
     });
     $("#"+id+" > "+table+" > h2 > .buttons").buttonset();
-}
+}*/

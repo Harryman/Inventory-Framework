@@ -3,26 +3,38 @@ namespace views\seg;
 class Document extends \libs\View {
 
     protected $table = "document";
-    protected $id = null;
-    function __construct($idr){
+    protected $id;
+    protected $noid = false;
+    function __construct($idr = "rand"){
         parent::__construct();
+        if($idr == "rand"){
+            $this->noid = true;
+            $this->id = mt_rand();
+        }
+        else{
         $this->id = $idr;
+        }
     }
     
     function add(){
-        $this->start("Document");
+        $this->start();
         $this->scriptStart();
-        $btn1 = $this->newBtns("1"," h2 > .buttons");
-        $this->
-        $this->endScript();
+        $btn1 = $this->newBtns("rand","1"," h2 > .buttons");
+        $this->btnAdd($btn1,"doc_function","Add a Function");
+        $this->btnSave($btn1);
+        $this->scriptEnd();
         $this->edit();
         $this->close();
     }
     function edit(){
         $this->dataStart();
-        $this->inputField()
+        $this->inputField("namespace","Namespace: ","");
         
         
+    }
+    function none(){
+        $this->scriptStart();
+        $this->scriptEnd();
     }
     
     function input($id){

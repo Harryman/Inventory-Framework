@@ -17,16 +17,25 @@ class Document extends \libs\Controller {
     }
     
     function add($id){
-        $this->documentV = new \views\seg\Document($id);
+        $this->documentV = new \views\seg\Document();
         
     }
     function edit(){
+        
+    }
+    function view(){
         
     }
     function data(){
         
     }
     function delete(){
+        
+    }
+    function none(){
+        
+    }
+    function save(){
         
     }
  
