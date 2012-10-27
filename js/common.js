@@ -1,14 +1,13 @@
-function Btnset(idr,table,container,noid){
-    if(idr != "rand"){
-        this.id = idr;
-    }
-    else{
-    this.id;
+function Btnset(idr,table,container){
+    this.id = idr;
+    this.dbid;
+    if(this.id < 100000000){
+        this.dbid = this.id;
     }
     this.table = table;
     this.container = container;
-    this.btncon = "#"+idr+" > #"+table+" > "+container;
-    this.seccon = "#"+idr+" > #"+table;
+    this.btncon = "#"+this.id+" > #"+table+" > "+container;
+    this.seccon = "#"+this.id+" > #"+table;
     $(this.btncon).buttonset();
 }
 
@@ -34,18 +33,18 @@ Btnset.prototype.add = function(callback, title, fkey){
          if(!this.addFkey){
                 $.ajax({
                     type: 'POST',
-                    data: $("#"+this.id+" > #"+this.table+" > #form form").serialize(),
+                    data: $(this.seccon+" #data > form").serialize(),
                     url: url+"seg/"+this.table+"/save/",
-                    success: function(data){
-                        $.get(url+"seg/"+callback+"/add/rand/"+data, function(seg){
+                    success: function(fkey){
+                        $.get(url+"seg/"+callback+"/add/"+fkey+"/", function(seg){
                             $(this.seccon).append(seg);
                         });
-                        this.addFkey = data;
+                        this.addFkey = fkey;
                     }
                 }); 
          }
          else{
-            $.get(url+"seg/"+callback+"/rand/"+fkey, function(seg){
+            $.get(url+"seg/"+callback+"/"+fkey, function(seg){
                 $(this.seccon).append(seg);
             });
          }
@@ -62,7 +61,7 @@ Btnset.prototype.edit = function(){
         text: false
     });
     $(btn).click(function(){
-        $.get(url+"seg/"+this.table+"/edit/"+this.id ,function(data){
+        $.get(url+"seg/"+this.table+"/edit/"+this.dbid ,function(data){
             $(this.seccon+" > #data").replaceWith(data);
         });
         $(this.btncon).children().remove();
@@ -82,7 +81,7 @@ Btnset.prototype.cancel = function(){
         text: false
     });
     $(btn).click(function(){
-        $.get(url+"seg/"+this.table+"/data/"+this.id ,function(data){
+        $.get(url+"seg/"+this.table+"/data/"+this.db ,function(data){
             $(this.seccon+" > #data").replaceWith(data);
         });
         $(this.btncon).children().remove();
@@ -100,7 +99,7 @@ Btnset.prototype.del = function(){
         text: false
     });
     $(btn).click(function(){//add dialogbox and validation 
-        $.get(url+"seg/"+this.table+"/delete/"+this.id ,function(data){
+        $.get(url+"seg/"+this.table+"/delete/"+this.dbid ,function(data){
         });
         $.get(url+"seg/"+this.table+"/add/",function(data){
             $("#"+this.id).replaceWith(data);
@@ -119,12 +118,17 @@ Btnset.prototype.save = function(){
     $(btn).click(function(){
         //isgood = validator(valids);
         //if(isgood === true){
-            $.get(url+"seg/"+this.table+"/save/"+this.id ,function(data){
-
-            });
-            $.get(url+"seg/"+this.table+"/add/",function(data){
-                $("#"+this.id).replaceWith(data);
-            });
+             $.ajax({
+                    type: 'POST',
+                    data: $(this.seccon+" #data > form").serialize(),
+                    url: url+"seg/"+this.table+"/save/"+this.dbid,
+                    success: function(id){
+                        $.get(url+"seg/"+this.table+"/view/"+id ,function(data){
+                           $(this.seccon+" #save").click()
+                           $("#"+this.id).replaceWith(data);
+                        });
+                    }
+                }); 
       //  }
         //else{
           //  $("#validate-message").text().replaceWith(isgood.message);
@@ -133,10 +137,10 @@ Btnset.prototype.save = function(){
     });
 }
 
-Btnset.prototype.validator = function(toCheck){
+ /*Btnset.prototype.validator = function(toCheck){
     //write this shit later 
 }
-    /*
+   
 function validator(toCheck){
     
     else{

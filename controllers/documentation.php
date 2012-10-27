@@ -29,10 +29,10 @@ class Documentation extends \libs\Controller {
         $this->model->ac($namespace);
     }
     function add(){
-        $this->document = new cs\Document();
+        //$this->document = new cs\Document();
         require 'views/header.php';
         $this->view->search();
-        $this->document->input();
+        $this->document->add();
         require 'views/footer.php';
     }
     function search(){

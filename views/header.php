@@ -5,6 +5,7 @@
         <script src="<? echo URL;?>jquery/jquery-1.8.2.min.js"></script>
         <script src="<? echo URL;?>jqueryui/js/jquery-ui-1.9.0.custom.min.js"></script>
         <script>$.uiBackCompat = false;</script>
+        <script src="<?=URL;?>js/config.js"></script>
         <script src="<?=URL;?>js/common.js"></script>
     </head>
     <body>

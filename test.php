@@ -10,14 +10,9 @@
     </head>
     <body>
         <? $array = array("add","edit","delete","submit");
- $out = json_encode($array,JSON_FORCE_OBJECT);
- var_dump($array); 
+ $out = mt_rand(100000000,100050000);
+ $out = $out-100000000;
  var_dump($out);
- echo"<script>var out = ".$out.";
-     
-     $.each(out, function(i,val){
-     alert(val)
-     });
      </script>";
         ?>
         <div id="header"></div>

@@ -4,39 +4,34 @@ class Document extends \libs\View {
 
     protected $table = "document";
     protected $id;
-    protected $noid = false;
-    function __construct($idr = "rand"){
+    function __construct($idr){
         parent::__construct();
-        if($idr == "rand"){
-            $this->noid = true;
-            $this->id = mt_rand();
-        }
-        else{
         $this->id = $idr;
-        }
     }
     
     function add(){
-        $this->start();
+        $this->start("Document");
         $this->scriptStart();
-        $btn1 = $this->newBtns("rand","1"," h2 > .buttons");
+        $btn1 = $this->newBtns("1"," h2 > .buttons");
         $this->btnAdd($btn1,"doc_function","Add a Function");
         $this->btnSave($btn1);
         $this->scriptEnd();
         $this->edit();
-        $this->close();
+        $this->end();
     }
     function edit(){
         $this->dataStart();
-        $this->inputField("namespace","Namespace: ","");
-        
-        
+        $this->inputField("text","namespace","Namespace: ","name/space");
+        $this->inputField("textarea","description","Description:","Describe the general purpose of this file",4);
+        $this->inputField("textarea","code","Full code:","Paste code here, formatting will be preserved",9);
+        $this->dataEnd();      
     }
+   // function edit_field
     function none(){
         $this->scriptStart();
         $this->scriptEnd();
     }
-    
+ /*   
     function input($id){
         echo $this->Start($id, "document", "Document", ["add","delete","cancel","save"]);
 
@@ -163,5 +158,5 @@ $(function(){";
 if($flag == 1 ){
     echo"</div>";
 }              
-    }
+    }*/
 }

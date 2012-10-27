@@ -12,13 +12,13 @@ class Document extends \libs\Controller {
     function index(){
     }
     //view builders 
-    function input($id = "rand"){
-        $this->documentV->input($id);
-    }
+  //  function input($id = "rand"){
+ //       $this->documentV->input($id);
+ //   }
     
-    function add($id){
-        $this->documentV = new \views\seg\Document();
-        
+    function add(){
+        $this->documentV = new \views\seg\Document(mt_rand(100000000,mt_getrandmax()));  
+        $this->documentV->add();
     }
     function edit(){
         
@@ -42,9 +42,9 @@ class Document extends \libs\Controller {
     public function get($id){
         $this->documentM->get($id);
     }
-    function view($id,$rapt = "no"){
-        $this->documentV->view($id,$rapt);
-        }
+   // function view($id,$rapt = "no"){
+ //       $this->documentV->view($id,$rapt);
+    //    }
 
     
     // ajax handlers
