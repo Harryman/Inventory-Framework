@@ -1,6 +1,6 @@
 function Btnset(idr,tabler,container){
     this.id = idr;
-   // this.dbid;
+    this.dbid;
     if(this.id < 100000000){
         this.dbid = this.id;
     }
@@ -15,7 +15,7 @@ Btnset.prototype.add = function(callback, title, fkey){
     this.addCallback = callback;
     this.addTitle = title;
     this.addFkey = fkey;
-    $this = this
+    $this = this;
     $(this.btncon).append("<div id=\"add\"></div>");
     btn = this.btncon+" > #add";
     if(!title){
@@ -156,30 +156,4 @@ function inhrt(o){
     function F(){};
     F.prototype = o;
     return new F();
-}
-function startButton(id, table, add, btns){
-    $("#"+id+" > "+table+" > h2 > .buttons").buttonset();
-    $.each(btns, function(i, val){
-         $("#"+id+" > "+table+" > h2 > .buttons > #"+val).button({
-             icons:{
-                    primary: icons.val
-                    },
-             text: false
-         });
-         if(val == "add"){
-            $("#"+id+" > "+table+" > h2 > .buttons > #"+val).click(function(){
-                $.ajax({
-                    type: 'POST',
-                    data: $("#"+id+" > #"+table+" > #form form").serialize(),
-                    url: URL+"seg/"+table+"/insert/"+id,
-                    success: function(data){
-                        $.get(\"".URL."seg/document/input/data\", function(data){
-                    });    
-            });
-         }
-         $("#"+id+" > "+table+" > h2 > .buttons > #"+val).click(function(){
-             
-         })
-    });
-    $("#"+id+" > "+table+" > h2 > .buttons").buttonset();
 }*/
