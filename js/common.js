@@ -1,13 +1,13 @@
-function Btnset(idr,table,container){
+function Btnset(idr,tabler,container){
     this.id = idr;
-    this.dbid;
+   // this.dbid;
     if(this.id < 100000000){
         this.dbid = this.id;
     }
-    this.table = table;
+    this.table = tabler;
     this.container = container;
-    this.btncon = "#"+this.id+" > #"+table+" > "+container;
-    this.seccon = "#"+this.id+" > #"+table;
+    this.btncon = "#"+this.id+" > #"+tabler+" > "+container;
+    this.seccon = "#"+this.id+" > #"+tabler;
     $(this.btncon).buttonset();
 }
 
@@ -15,6 +15,7 @@ Btnset.prototype.add = function(callback, title, fkey){
     this.addCallback = callback;
     this.addTitle = title;
     this.addFkey = fkey;
+    $this = this
     $(this.btncon).append("<div id=\"add\"></div>");
     btn = this.btncon+" > #add";
     if(!title){
@@ -30,22 +31,22 @@ Btnset.prototype.add = function(callback, title, fkey){
         text: false
     });
      $(btn).click(function(){
-         if(!this.addFkey){
+         if(!$this.addFkey){
                 $.ajax({
                     type: 'POST',
-                    data: $(this.seccon+" #data > form").serialize(),
-                    url: url+"seg/"+this.table+"/save/",
+                    data: $($this.seccon+" #data > form").serialize(),
+                    url: urlbase+"seg/"+$this.table+"/save/",
                     success: function(fkey){
-                        $.get(url+"seg/"+callback+"/add/"+fkey+"/", function(seg){
-                            $(this.seccon).append(seg);
+                        $.get(urlbase+"seg/"+callback+"/add/"+fkey+"/", function(seg){
+                            $($this.seccon).append(seg);
                         });
-                        this.addFkey = fkey;
+                        $this.addFkey = fkey;
                     }
                 }); 
          }
          else{
-            $.get(url+"seg/"+callback+"/"+fkey, function(seg){
-                $(this.seccon).append(seg);
+            $.get(urlbase+"seg/"+callback+"/"+fkey, function(seg){
+                $($this.seccon).append(seg);
             });
          }
      });
@@ -53,6 +54,7 @@ Btnset.prototype.add = function(callback, title, fkey){
 
 Btnset.prototype.edit = function(){
     $(this.btncon).append("<div id=\"edit\" title=\"edit\"></div>");
+    $this = this;
     btn = this.btncon+" > #edit";
     $(btn).button({
         icons:{
@@ -61,19 +63,20 @@ Btnset.prototype.edit = function(){
         text: false
     });
     $(btn).click(function(){
-        $.get(url+"seg/"+this.table+"/edit/"+this.dbid ,function(data){
-            $(this.seccon+" > #data").replaceWith(data);
+        $.get(urlbase+"seg/"+$this.table+"/edit/"+$this.dbid ,function(data){
+            $($this.seccon+" > #data").replaceWith(data);
         });
-        $(this.btncon).children().remove();
-        this.del(id);
-        this.cancel(id);
-        this.add(this.addCallback,this.addTitle,this.addFkey);
-        this.submit(id);   
+        $($this.btncon).children().remove();
+        $this.del();
+        $this.cancel();
+        $this.add($this.addCallback,$this.addTitle,$this.addFkey);
+        $this.submit();   
     });        
 }
 Btnset.prototype.cancel = function(){
     $(this.btncon).append("<div id=\"cancel\" title=\"cancel\"></div>");
     btn = this.btncon+" > #cancel";
+    $this = this;
     $(btn).button({
         icons:{
             primary: icons.cancel
@@ -81,17 +84,18 @@ Btnset.prototype.cancel = function(){
         text: false
     });
     $(btn).click(function(){
-        $.get(url+"seg/"+this.table+"/data/"+this.db ,function(data){
-            $(this.seccon+" > #data").replaceWith(data);
+        $.get(urlbase+"seg/"+$this.table+"/data/"+$this.db ,function(data){
+            $($this.seccon+" > #data").replaceWith(data);
         });
-        $(this.btncon).children().remove();
-        this.edit();
+        $($this.btncon).children().remove();
+        $this.edit();
     });        
 }
 
 Btnset.prototype.del = function(){
     $(this.btncon).append("<div id=\"delete\" title=\"delete\"></div>");
     btn = this.btncon+" > #delete";
+    $this = this;
     $(btn).button({
         icons:{
             primary: icons.del
@@ -99,15 +103,16 @@ Btnset.prototype.del = function(){
         text: false
     });
     $(btn).click(function(){//add dialogbox and validation 
-        $.get(url+"seg/"+this.table+"/delete/"+this.dbid ,function(data){
+        $.get(urlbase+"seg/"+$this.table+"/delete/"+$this.dbid ,function(data){
         });
-        $.get(url+"seg/"+this.table+"/add/",function(data){
-            $("#"+this.id).replaceWith(data);
+        $.get(urlbase+"seg/"+$this.table+"/add/",function(data){
+            $("#"+$this.id).replaceWith(data);
         });   
     });
 }
 Btnset.prototype.save = function(){
      $(this.btncon).append("<div id=\"save\" title=\"save\"></div>");
+    $this = this;
     btn = this.btncon+" > #save";
     $(btn).button({
         icons:{
@@ -120,12 +125,12 @@ Btnset.prototype.save = function(){
         //if(isgood === true){
              $.ajax({
                     type: 'POST',
-                    data: $(this.seccon+" #data > form").serialize(),
-                    url: url+"seg/"+this.table+"/save/"+this.dbid,
+                    data: $($this.seccon+" #data > form").serialize(),
+                    url: urlbase+"seg/"+$this.table+"/save/"+$this.dbid,
                     success: function(id){
-                        $.get(url+"seg/"+this.table+"/view/"+id ,function(data){
-                           $(this.seccon+" #save").click()
-                           $("#"+this.id).replaceWith(data);
+                        $.get(urlbase+"seg/"+$this.table+"/view/"+id ,function(data){
+                           $($this.seccon+" #save").click()
+                           $("#"+$this.id).replaceWith(data);
                         });
                     }
                 }); 
