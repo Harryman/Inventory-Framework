@@ -6,7 +6,8 @@ function Btnset(idr,tabler,container){
     }
     this.table = tabler;
     this.container = container;
-    this.btncon = "#"+this.id+" > #"+tabler+" > #data "+container;
+    this.btncon = "#"+this.id+" > #"+tabler+" > #data "+container+" > .buttons";
+    this.hedcon = "#"+this.id+" > #"+tabler+" > #data "+container;
     this.seccon = "#"+this.id+" > #"+tabler;
     $(this.btncon).buttonset();
 }
@@ -73,7 +74,7 @@ Btnset.prototype.edit = function(){
         $this.del();
         $this.cancel();
         $this.add($this.addCallback,$this.addTitle,$this.addFkey);
-        $this.submit();   
+        $this.save();   
     });        
 }
 Btnset.prototype.cancel = function(){
@@ -87,7 +88,7 @@ Btnset.prototype.cancel = function(){
         text: false
     });
     $(btn).click(function(){
-        $.get(urlbase+"seg/"+$this.table+"/data/"+$this.db ,function(data){
+        $.get(urlbase+"seg/"+$this.table+"/data/"+$this.dbid ,function(data){
             $($this.seccon+" > #data").replaceWith(data);
         });
         $($this.btncon).children().remove();
@@ -131,6 +132,9 @@ Btnset.prototype.save = function(){
                     data: $($this.seccon+" #data > form").serialize(),
                     url: urlbase+"seg/"+$this.table+"/save/"+$this.dbid,
                     success: function(id){
+                        if(id == 0){
+                            id = $this.dbid;
+                        }
                         $.get(urlbase+"seg/"+$this.table+"/view/"+id ,function(data){
                            $($this.seccon+" #save:not("+btn+")").click();
                            $("#"+$this.id).replaceWith(data);
@@ -153,21 +157,24 @@ Btnset.prototype.formFill = function(){
     $this = this;
     $.get(urlbase+"seg/"+this.table+"/get/"+this.dbid ,function(data){
         $.each(data, function(k,v){
-            $($this.seccon+" > #data > #"+k).val(v);
+            $($this.seccon+" > #data  #"+k).val(v);
         });
     });
 }
 
-Btnset.prototype.dataFill = function(){
+Btnset.prototype.dataFill = function(title){
     $this = this;
     $.get(urlbase+"seg/"+this.table+"/get/"+this.dbid ,function(data){
         $.each(data, function(k,v){
-            $($this.seccon+" > #data > #"+k).append(v);
+            if(k == title){
+                $($this.hedcon).prepend(v); 
+            }
+            else{
+                $($this.seccon+" > #data #"+k).text(v);
+            }
         });
     });
-}
-]
-    
+}    
 
   
  /*  

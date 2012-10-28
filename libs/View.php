@@ -43,23 +43,38 @@ class View {
             echo"});</script>
                 ";
         }
-        function btnAdd($callback, $title, $fkey = null){
+        function btnAdd($callback, $title, $fkey = null,$handle = NULL){ 
+            if($handle == NULL){
+                $handle = $this->handle;
+            }
             echo $handle.".add(\"".$callback."\",\"".$title."\",\"".$fkey."\");
                 ";
         }
-        function btnEdit($handle = $this->handle){
+        function btnEdit($handle = NULL){ 
+            if($handle == NULL){
+                $handle = $this->handle;
+            }
             echo $handle.".edit();
                 ";
         }
-        function btnCancel($handle = $this->handle){
+        function btnCancel($handle = NULL){ 
+            if($handle == NULL){
+                $handle = $this->handle;
+            }
             echo $handle.".cancel();
                 ";
         }
-        function btnSave($handle = $this->handle){
+        function btnSave($handle = NULL){ 
+            if($handle == NULL){
+                $handle = $this->handle;
+            }
             echo $handle.".save();
                 ";
         }
-        function btnDel($handle = $this->handle){
+        function btnDel($handle = NULL){ 
+            if($handle == NULL){
+                $handle = $this->handle;
+            }
             echo $handle.".del();
                 ";
         }

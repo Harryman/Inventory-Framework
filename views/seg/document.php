@@ -4,43 +4,51 @@ class Document extends \libs\View {
 
     protected $table = "document";
     protected $id;
-    function __construct($idr = mt_rand(100000000,mt_getrandmax())){
+    function __construct($idr = Null){
         parent::__construct();
+        if($idr == Null){
+            $idr = mt_rand(100000000,mt_getrandmax());
+        }
         $this->id = $idr;
     }
-    
+ 
     function add(){
         $this->start();
         $this->edit("Document");
         $this->end();
     }
-    function edit($title = null){
-        $this->dataStart($title);
-        $this->scriptStart();
-        $btn1 = $this->newBtns(" > h2 > .buttons");
-        if(!$title){
-            $this->btnDel($btn1);
-            $this->btnCancel($btn1);
-        }
-        $this->btnAdd($btn1,"doc_function","Add a Function",$this->id);
-        $this->btnSave($btn1);
-        $this->scriptEnd();
+    function edit(){
+        $this->dataStart("Document");
         $this->inputField("text","namespace","Namespace: ","name/space");
         $this->inputField("textarea","description","Description:","Describe the general purpose of this file",4);
         $this->inputField("textarea","code","Full code:","Paste code here, formatting will be preserved",9);
+        $this->scriptStart();
+        $this->newBtns(" > h2 ");
+        if($this->id < 9999999){
+            $this->btnDel();
+            $this->btnCancel();
+        }
+        $this->btnAdd("doc_function","Add a Function",$this->id);
+        $this->btnSave();
+        echo $this->handle.".formFill();";
+        $this->scriptEnd();
         $this->dataEnd();      
     }
-   // function edit_field
     function view(){
         $this->start();
         $this->data();
-        $this->close();
+        $this->end();
     }
     function data(){
         $this->dataStart();
+        echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"description\"></div></div><br/>
+            <div>Full Code:<div class=\"code\" id=\"code\"></div></div></div>";
         $this->scriptStart();
-        $ts = $this->newBtns(" > h2 > .buttons");
+        $ts = $this->newBtns(" > h2");
         $this->btnEdit($ts);
+        echo $this->handle.".dataFill(\"namespace\");";
+        $this->scriptEnd();
+        $this->dataEnd();
     }
     function none(){
         $this->scriptStart();

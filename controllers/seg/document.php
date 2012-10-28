@@ -27,9 +27,11 @@ class Document extends \libs\Controller {
     }
     function view($id){
        $this->documentV = new vs\Document($id);
-       $this->documentV->veiw();
+       $this->documentV->view();
     }
-    function data(){
+    function data($id){
+        $this->documentV = new vs\Document($id);
+        $this->documentV->data();
         
     }
     function delete(){

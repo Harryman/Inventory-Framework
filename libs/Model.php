@@ -94,7 +94,7 @@ class Model {
             $st = $this->db->prepare("SELECT * FROM `".$this->table."` WHERE `".$idField."` = :id");
             $st->execute([":id"=>$id]);
             $result = $st->fetch(\PDO::FETCH_ASSOC);
-            $result = json_encode($resutl);
+            $result = json_encode($result);
             header('Content-Type: application/json');
             return $result;
         }
