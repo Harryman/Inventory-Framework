@@ -61,8 +61,27 @@ class Model {
                 $i++;
             }
             return json_encode($coded);
-            
         }
+        
+        protected function insert($col,$id = null){
+            $exarr[$col[0]] = $id;
+            foreach($col as $val){
+                $colstr += "`".$val."`,";
+                $valstr += ":".$val.",";
+                $exarr[":".$val] = $_POST[$val];
+                if($col[0] != $val){
+                    $upstr += "`".$val."` = VALUE(`".$val."`), ";
+                }
+            }
+            $colstr = rtrim($colstr);
+            $valstr = rtrim($valstr);
+            $upstr = rtrim($upstr);
+            $query = "INSERT INTO `".$this->table."` (".$colstr.") VALUES(".$valstr.") ON DUPLICATE KEY UPDATE ".$upstr;
+            $st = $this->db->prepare($query);
+            $st->execute($exarr);
+            $ret = $this->db->lastInsertId();
+            echo $ret;
+            }
         protected function jsRemove($id){// figure this out later 
             
         }
