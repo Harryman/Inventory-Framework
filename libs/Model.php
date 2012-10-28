@@ -63,33 +63,40 @@ class Model {
             return json_encode($coded);
         }
         
-        protected function insert($col,$id = null){
-            $exarr[$col[0]] = $id;
+        protected function insertSeg($col,$id = null){
+            $colstr = "";
+            $valstr = "";
+            $upstr = "";
             foreach($col as $val){
-                $colstr += "`".$val."`,";
-                $valstr += ":".$val.",";
-                $exarr[":".$val] = $_POST[$val];
+                $colstr .= "`".$val."`,";
+                $valstr .= "?,"; 
                 if($col[0] != $val){
-                    $upstr += "`".$val."` = VALUE(`".$val."`), ";
+                    $upstr .= "`".$val."` = VALUES(`".$val."`) ,";
+                    $exarr[$idx] = $_POST[$val];
+                    $idx++;
+                }
+                else{
+                    $exarr[0] = $id;
+                    $idx = 1;
                 }
             }
-            $colstr = rtrim($colstr);
-            $valstr = rtrim($valstr);
-            $upstr = rtrim($upstr);
+            $colstr = rtrim($colstr,",");
+            $valstr = rtrim($valstr,",");
+            $upstr = rtrim($upstr,",");
             $query = "INSERT INTO `".$this->table."` (".$colstr.") VALUES(".$valstr.") ON DUPLICATE KEY UPDATE ".$upstr;
             $st = $this->db->prepare($query);
             $st->execute($exarr);
             $ret = $this->db->lastInsertId();
-            echo $ret;
+            return  $ret;
         }
             
-        protected function get($idField, $id){
+        protected function getSeg($idField, $id){
             $st = $this->db->prepare("SELECT * FROM `".$this->table."` WHERE `".$idField."` = :id");
             $st->execute([":id"=>$id]);
             $result = $st->fetch(\PDO::FETCH_ASSOC);
             $result = json_encode($resutl);
             header('Content-Type: application/json');
-            echo $result;
+            return $result;
         }
             
             protected function jsRemove($id){// figure this out later 

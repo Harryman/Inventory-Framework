@@ -6,7 +6,7 @@ function Btnset(idr,tabler,container){
     }
     this.table = tabler;
     this.container = container;
-    this.btncon = "#"+this.id+" > #"+tabler+" > "+container;
+    this.btncon = "#"+this.id+" > #"+tabler+" > #data "+container;
     this.seccon = "#"+this.id+" > #"+tabler;
     $(this.btncon).buttonset();
 }
@@ -14,7 +14,9 @@ function Btnset(idr,tabler,container){
 Btnset.prototype.add = function(callback, title, fkey){
     this.addCallback = callback;
     this.addTitle = title;
-    this.addFkey = fkey;
+    if(fkey<100000000){
+        this.addFkey = fkey;
+    }
     $this = this;
     $(this.btncon).append("<div id=\"add\"></div>");
     btn = this.btncon+" > #add";
@@ -50,6 +52,7 @@ Btnset.prototype.add = function(callback, title, fkey){
             });
          }
      });
+     this.addFkey = $this.addFkey;
 }
 
 Btnset.prototype.edit = function(){
@@ -129,7 +132,7 @@ Btnset.prototype.save = function(){
                     url: urlbase+"seg/"+$this.table+"/save/"+$this.dbid,
                     success: function(id){
                         $.get(urlbase+"seg/"+$this.table+"/view/"+id ,function(data){
-                           $($this.seccon+" #save").click()
+                           $($this.seccon+" #save:not("+btn+")").click();
                            $("#"+$this.id).replaceWith(data);
                         });
                     }
@@ -142,10 +145,32 @@ Btnset.prototype.save = function(){
     });
 }
 
- /*Btnset.prototype.validator = function(toCheck){
+ Btnset.prototype.validator = function(toCheck){
     //write this shit later 
 }
-   
+
+Btnset.prototype.formFill = function(){
+    $this = this;
+    $.get(urlbase+"seg/"+this.table+"/get/"+this.dbid ,function(data){
+        $.each(data, function(k,v){
+            $($this.seccon+" > #data > #"+k).val(v);
+        });
+    });
+}
+
+Btnset.prototype.dataFill = function(){
+    $this = this;
+    $.get(urlbase+"seg/"+this.table+"/get/"+this.dbid ,function(data){
+        $.each(data, function(k,v){
+            $($this.seccon+" > #data > #"+k).append(v);
+        });
+    });
+}
+]
+    
+
+  
+ /*  
 function validator(toCheck){
     
     else{

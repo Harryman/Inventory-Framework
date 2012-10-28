@@ -16,21 +16,21 @@ class View {
             }
 	}
         
-        function start($title = null){
+        function start(){
         echo "<div id=\"".$this->id ."\" >
-                <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\"> 
-                <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">";
-        echo"</div></h2><div id=\"validate-msg\"></div>
-            <div class=\"clearfloat\"></div>";
+                <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\">";
         }
         
         function end(){
             echo"</div></div>";
         }
   
-        function dataStart(){
-            echo"<div id=\"data\" class=\"mar-laft\">
-                <form>";
+        function dataStart($title = null){
+          echo"<div id=\"data\">
+          <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">
+            </div></h2><div id=\"validate-msg\"></div>
+            <div class=\"clearfloat\"></div>
+                <form class=\"mar-laft\">";
         }
         function dataEnd(){
             echo"</form></div>";
@@ -43,31 +43,34 @@ class View {
             echo"});</script>
                 ";
         }
-        function btnAdd($handle,$callback, $title, $fkey = null){
+        function btnAdd($callback, $title, $fkey = null){
             echo $handle.".add(\"".$callback."\",\"".$title."\",\"".$fkey."\");
                 ";
         }
-        function btnEdit($handle){
+        function btnEdit($handle = $this->handle){
             echo $handle.".edit();
                 ";
         }
-        function btnCancel($handle){
+        function btnCancel($handle = $this->handle){
             echo $handle.".cancel();
                 ";
         }
-        function btnSave($handle){
+        function btnSave($handle = $this->handle){
             echo $handle.".save();
                 ";
         }
-        function btnDel($handle){
+        function btnDel($handle = $this->handle){
             echo $handle.".del();
                 ";
         }
             
-        function newBtns($inst, $container){
+        function newBtns($container,$inst = "1"){
             $handle = $this->table.$this->id.$inst;
             echo $handle." = new Btnset(\"".$this->id."\",\"".$this->table."\",\"".$container."\");
                 ";
+            if($inst){
+                $this->handle = $handle;
+            }
             return $handle;
             
         }

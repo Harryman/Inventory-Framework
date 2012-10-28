@@ -1,5 +1,6 @@
 <?php
 namespace controllers\seg;
+use \views\seg as vs;
 class Document extends \libs\Controller {
 
     protected $table = "document";
@@ -17,14 +18,16 @@ class Document extends \libs\Controller {
  //   }
     
     function add(){
-        $this->documentV = new \views\seg\Document(mt_rand(100000000,mt_getrandmax()));  
+        $this->documentV = new vs\Document();  
         $this->documentV->add();
     }
-    function edit(){
-        
+    function edit($id = null){
+        $this->documentV = new vs\Document($id);
+        $this->documentV->edit();
     }
-    function view(){
-        
+    function view($id){
+       $this->documentV = new vs\Document($id);
+       $this->documentV->veiw();
     }
     function data(){
         
@@ -35,8 +38,8 @@ class Document extends \libs\Controller {
     function none(){
         
     }
-    function save(){
-        
+    function save($id = null){
+        $this->documentM->insert($id);      
     }
  
     public function get($id){

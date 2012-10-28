@@ -4,29 +4,44 @@ class Document extends \libs\View {
 
     protected $table = "document";
     protected $id;
-    function __construct($idr){
+    function __construct($idr = mt_rand(100000000,mt_getrandmax())){
         parent::__construct();
         $this->id = $idr;
     }
     
     function add(){
-        $this->start("Document");
-        $this->scriptStart();
-        $btn1 = $this->newBtns("1"," h2 > .buttons");
-        $this->btnAdd($btn1,"doc_function","Add a Function");
-        $this->btnSave($btn1);
-        $this->scriptEnd();
-        $this->edit();
+        $this->start();
+        $this->edit("Document");
         $this->end();
     }
-    function edit(){
-        $this->dataStart();
+    function edit($title = null){
+        $this->dataStart($title);
+        $this->scriptStart();
+        $btn1 = $this->newBtns(" > h2 > .buttons");
+        if(!$title){
+            $this->btnDel($btn1);
+            $this->btnCancel($btn1);
+        }
+        $this->btnAdd($btn1,"doc_function","Add a Function",$this->id);
+        $this->btnSave($btn1);
+        $this->scriptEnd();
         $this->inputField("text","namespace","Namespace: ","name/space");
         $this->inputField("textarea","description","Description:","Describe the general purpose of this file",4);
         $this->inputField("textarea","code","Full code:","Paste code here, formatting will be preserved",9);
         $this->dataEnd();      
     }
    // function edit_field
+    function view(){
+        $this->start();
+        $this->data();
+        $this->close();
+    }
+    function data(){
+        $this->dataStart();
+        $this->scriptStart();
+        $ts = $this->newBtns(" > h2 > .buttons");
+        $this->btnEdit($ts);
+    }
     function none(){
         $this->scriptStart();
         $this->scriptEnd();

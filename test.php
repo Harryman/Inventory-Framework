@@ -10,7 +10,7 @@
     </head>
     <body>
         <? $array = array("add","edit","delete","submit");
- $out = mt_rand(100000000,100050000);
+ $out = mt_rand(100000000,mt_getrandmax());
  $out = $out-100000000;
  var_dump($out);
      </script>";
