@@ -81,8 +81,18 @@ class Model {
             $st->execute($exarr);
             $ret = $this->db->lastInsertId();
             echo $ret;
-            }
-        protected function jsRemove($id){// figure this out later 
+        }
+            
+        protected function get($idField, $id){
+            $st = $this->db->prepare("SELECT * FROM `".$this->table."` WHERE `".$idField."` = :id");
+            $st->execute([":id"=>$id]);
+            $result = $st->fetch(\PDO::FETCH_ASSOC);
+            $result = json_encode($resutl);
+            header('Content-Type: application/json');
+            echo $result;
+        }
+            
+            protected function jsRemove($id){// figure this out later 
             
         }
 }
