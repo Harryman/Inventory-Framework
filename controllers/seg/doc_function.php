@@ -1,20 +1,44 @@
 <?php
 namespace controllers\seg;
-use controllers\seg as cs;
+use \views\seg as vs;
 class Doc_function extends \libs\Controller {
 
+    protected $table = "doc_function";
+    
     function __construct() {
         parent::__construct();
-        $this->doc_function = new \models\seg\Doc_function();
-    }
- function index(){
+        $this->documentM = new \models\seg\Document();
         
     }
-    //view builders
-    function input($id = "rand", $script = true,$opt = NULL){
-        $this->doc_function->input($id,$script,$opt);
+    function index(){
+        $this->add();
     }
-    function edit(){
-        
+    function add(){
+        $this->documentV = new vs\Document();  
+        $this->documentV->add();
     }
+    function edit($id = null){
+        $this->documentV = new vs\Document($id);
+        $this->documentV->edit();
+    }
+    function view($id){
+       $this->documentV = new vs\Document($id);
+       $this->documentV->view();
+    }
+    function data($id){
+        $this->documentV = new vs\Document($id);
+        $this->documentV->data();
+    }
+    function delete($id){
+        $this->documentM->del($id);
+    }
+    function save($id = null){
+        $this->documentM->insert($id);      
+    }
+    public function get($id){
+        $this->documentM->get($id);
+    }
+    function insert($id){
+        $this->documentM->insert($id);     
+    }    
 }

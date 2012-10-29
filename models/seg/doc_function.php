@@ -1,20 +1,19 @@
 <?php
 namespace models\seg;
-use models\seg as ms;
 class Doc_function extends \libs\Model {
-
+    public $table = "doc_function";
     function __construct() {
         parent::__construct();
     }
-    function index(){
-        
+     function insert($id){
+       $ret = $this->insertSeg(["func_id", "doc_id", "code", "description"],$id);
+       echo $ret; 
     }
-    //view builders
-    function input($id = "rand", $script = true,$opt = NULL){
-        
+    function get($id){
+        $ret = $this->getSeg("func_id", $id);
+        echo $ret;
     }
-    function edit(){
-        
+    function del($id){
+        $this->delSeg("func_id", $id);
     }
-
 }
