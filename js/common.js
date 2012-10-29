@@ -91,8 +91,6 @@ Btnset.prototype.cancel = function(){
         $.get(urlbase+"seg/"+$this.table+"/data/"+$this.dbid ,function(data){
             $($this.seccon+" > #data").replaceWith(data);
         });
-        $($this.btncon).children().remove();
-        $this.edit();
     });        
 }
 
@@ -125,8 +123,8 @@ Btnset.prototype.save = function(){
         text: false
     });
     $(btn).click(function(){
-        //isgood = validator(valids);
-        //if(isgood === true){
+        isgood = $this.validator();
+        if(isgood === true){
              $.ajax({
                     type: 'POST',
                     data: $($this.seccon+" #data > form").serialize(),
@@ -141,16 +139,37 @@ Btnset.prototype.save = function(){
                         });
                     }
                 }); 
-      //  }
-        //else{
-          //  $("#validate-message").text().replaceWith(isgood.message);
-            //dialog box goes here
-       // }
-    });
+        }
+   });
 }
 
- Btnset.prototype.validator = function(toCheck){
-    //write this shit later 
+ Btnset.prototype.validator = function(){
+     $this = this;
+     $("#validate-msg").text("");
+    $.each(vald[this.table], function(k,v){
+        flag = false;
+        if(v == "required"){
+            isgood = $($this.seccon +" > #data #"+k).val();
+            if(isgood == ""){
+                $("#validate-msg").append("<strong>"+k+"</strong> is required<br/>");
+                flag = true;
+            }
+        }
+    });
+    if(flag == true){
+        $("#validate-msg").dialog({
+             modal: true,
+             buttons:{
+                 Ok: function(){
+                     $(this).dialog("close");
+                 }
+             }
+         });
+         return false;
+    }
+    else{
+        return true;
+    }
 }
 
 Btnset.prototype.formFill = function(){

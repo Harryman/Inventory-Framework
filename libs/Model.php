@@ -98,6 +98,10 @@ class Model {
             header('Content-Type: application/json');
             return $result;
         }
+        protected function delSeg($idField, $id){
+            $st = $this->db->prepare("DELETE FROM `".$this->table."` WHERE `".$idField."` = :id");
+            $st->execute([":id"=>$id]);
+        }
             
             protected function jsRemove($id){// figure this out later 
             

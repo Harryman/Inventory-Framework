@@ -167,6 +167,9 @@ header, section, footer, aside, nav, article, figure {
 input{
     font-size: 16px;
 }
+.u-fucked-up{
+    border: #cd0a0a solid thick;
+}
 .code {
  white-space: pre-wrap;
  white-space: -moz-pre-wrap;

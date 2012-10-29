@@ -18,7 +18,8 @@ class View {
         
         function start(){
         echo "<div id=\"".$this->id ."\" >
-                <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\">";
+                <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\">
+                   ";
         }
         
         function end(){
@@ -28,12 +29,13 @@ class View {
         function dataStart($title = null){
           echo"<div id=\"data\">
           <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">
-            </div></h2><div id=\"validate-msg\"></div>
+            </div></h2><div id=\"validate-msg\" title=\"You have fucked up now\"></div>
             <div class=\"clearfloat\"></div>
-                <form class=\"mar-laft\">";
+                <form class=\"mar-laft\">
+                 <div class=\"mar-left\">";
         }
         function dataEnd(){
-            echo"</form></div>";
+            echo"</form></div></div>";
         }
         function scriptStart(){
             echo "<script>$(function(){
@@ -90,16 +92,16 @@ class View {
             
         }
         function inputField($type, $name, $label, $placeholder = false, $option= false ){
-            echo "<div id=\"".$name."\" class=\"mar-left\">";
+           // echo "<div id=\"".$name."\" class=\"mar-left\">";
             if($type == "text"){
-                echo $label." <input id=\"".$name."\" type=\"text\" name=\"".$name."\"";
+                echo $label." <input id=\"".$name."\" type=\"text\" name=\"".$name."\" class=\"text ui-widget-content ui-corner-all\"";
                 if($placeholder != false){
                     echo"placeholder=\"".$placeholder."\"";
                 }
                 if($option != false){
                     echo $option;
                 }
-                echo "class=\"text ui-widget-content ui-corner-all\">";   
+                echo "\"><br/>";   
             }
             if($type =="textarea"){
                 echo $label."<br/><textarea name=\"".$name."\" id=\"".$name."\" cols=\"75\" class=\"text ui-widget-content ui-corner-all\" ";
@@ -109,8 +111,8 @@ class View {
                 if($option != false){
                     echo "rows=\"".$option."\" ";
                 }
-                echo "></textarea>";
+                echo "></textarea><br/>";
             }
-            echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
+         //   echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
         }
 }
