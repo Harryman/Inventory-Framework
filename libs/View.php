@@ -29,7 +29,7 @@ class View {
         function dataStart($title = null){
           echo"<div id=\"data\">
           <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">
-            </div></h2><div id=\"validate-msg\" title=\"You have fucked up now\"></div>
+            </div></h2><div id=\"".$this->table.$this->id."validate\" title=\"You have fucked up now\"></div>
             <div class=\"clearfloat\"></div>
                 <form class=\"mar-laft\">
                  <div class=\"mar-left\">";

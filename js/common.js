@@ -145,19 +145,21 @@ Btnset.prototype.save = function(){
 
  Btnset.prototype.validator = function(){
      $this = this;
-     $("#validate-msg").text("");
+     $(this.seccon+" > #data .u-fucked-up").removeClass("u-fucked-up")
+     $("#"+this.table+this.id+"validate").text("");
     $.each(vald[this.table], function(k,v){
         flag = false;
         if(v == "required"){
             isgood = $($this.seccon +" > #data #"+k).val();
             if(isgood == ""){
-                $("#validate-msg").append("<strong>"+k+"</strong> is required<br/>");
+                $("#"+$this.table+$this.id+"validate").append("<strong>"+k+"</strong> is required<br/>");
                 flag = true;
+                $($this.seccon +" > #data #"+k).addClass("u-fucked-up");
             }
         }
     });
     if(flag == true){
-        $("#validate-msg").dialog({
+        $("#"+this.table+this.id+"validate").dialog({
              modal: true,
              buttons:{
                  Ok: function(){
