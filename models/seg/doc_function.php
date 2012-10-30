@@ -6,7 +6,7 @@ class Doc_function extends \libs\Model {
         parent::__construct();
     }
      function insert($id){
-       $ret = $this->insertSeg(["func_id", "doc_id", "code", "description"],$id);
+       $ret = $this->insertSeg(["func_id", "doc_id","func_name", "code", "description"],$id);
        echo $ret; 
     }
     function get($id){

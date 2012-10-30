@@ -16,9 +16,9 @@ class View {
             }
 	}
         
-        function start(){
+        function start($class = null){
         echo "<div id=\"".$this->id ."\" >
-                <div id=\"".$this->table."\" class=\"text ui-widget-content ui-corner-all\">
+                <div id=\"".$this->table."\" class=\"".$class." text ui-widget-content ui-corner-all\">
                    ";
         }
         
@@ -83,6 +83,7 @@ class View {
             
         function newBtns($container,$inst = "1"){
             $handle = $this->table.$this->id.$inst;
+            
             echo $handle." = new Btnset(\"".$this->id."\",\"".$this->table."\",\"".$container."\");
                 ";
             if($inst){
@@ -112,6 +113,9 @@ class View {
                     echo "rows=\"".$option."\" ";
                 }
                 echo "></textarea><br/>";
+            }
+            if($type =="hidden"){
+                echo"<input name=\"".$name."\" id=\"".$name."\" type=\"hidden\" value=\"".$label."\"/>";
             }
          //   echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
         }

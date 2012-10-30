@@ -7,38 +7,38 @@ class Doc_function extends \libs\Controller {
     
     function __construct() {
         parent::__construct();
-        $this->documentM = new \models\seg\Document();
+        $this->doc_functionM = new \models\seg\Doc_function();
         
     }
     function index(){
         $this->add();
     }
-    function add(){
-        $this->documentV = new vs\Document();  
-        $this->documentV->add();
+    function add($fkey){
+        $this->doc_functionV = new vs\doc_function();  
+        $this->doc_functionV->add($fkey);
     }
     function edit($id = null){
-        $this->documentV = new vs\Document($id);
-        $this->documentV->edit();
+        $this->doc_functionV = new vs\doc_function($id);
+        $this->doc_functionV->edit();
     }
     function view($id){
-       $this->documentV = new vs\Document($id);
-       $this->documentV->view();
+       $this->doc_functionV = new vs\doc_function($id);
+       $this->doc_functionV->view();
     }
     function data($id){
-        $this->documentV = new vs\Document($id);
-        $this->documentV->data();
+        $this->doc_functionV = new vs\doc_function($id);
+        $this->doc_functionV->data();
     }
     function delete($id){
-        $this->documentM->del($id);
+        $this->doc_functionM->del($id);
     }
     function save($id = null){
-        $this->documentM->insert($id);      
+        $this->doc_functionM->insert($id);      
     }
     public function get($id){
-        $this->documentM->get($id);
+        $this->doc_functionM->get($id);
     }
     function insert($id){
-        $this->documentM->insert($id);     
+        $this->doc_functionM->insert($id);     
     }    
 }

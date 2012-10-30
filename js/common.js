@@ -12,171 +12,182 @@ function Btnset(idr,tabler,container){
     $(this.btncon).buttonset();
 }
 
+Btnset.prototype.dbidset = function(set){
+    this.dbid = set;
+}
+
 Btnset.prototype.add = function(callback, title, fkey){
     this.addCallback = callback;
     this.addTitle = title;
     if(fkey<100000000){
         this.addFkey = fkey;
     }
-    $this = this;
     $(this.btncon).append("<div id=\"add\"></div>");
-    btn = this.btncon+" > #add";
     if(!title){
-        $(btn).attr("title", "add");
+        $(this.btncon+" > #add").attr("title", "add");
     }
     else{
-        $(btn).attr("title",title);
+        $(this.btncon+" > #add").attr("title",title);
     }
-    $(btn).button({
+    $(this.btncon+" > #add").button({
         icons:{
             primary: icons.add
         },
         text: false
     });
-     $(btn).click(function(){
-         if(!$this.addFkey){
+    var dbid;
+    $(this.btncon+" > #add").on('click',{value:this}, function(event){
+        if(!event.data.value.addFkey){
+            isgood = event.data.value.validator();
+            if(isgood === true){
                 $.ajax({
                     type: 'POST',
-                    data: $($this.seccon+" #data > form").serialize(),
-                    url: urlbase+"seg/"+$this.table+"/save/",
+                    data: $(event.data.value.seccon+" #data > form").serialize(),
+                    url: urlbase+"seg/"+event.data.value.table+"/save/",
                     success: function(fkey){
+                        if(fkey == 0){
+                            fkey = event.data.value.id;
+                        }
                         $.get(urlbase+"seg/"+callback+"/add/"+fkey+"/", function(seg){
-                            $($this.seccon).append(seg);
+                            $(event.data.value.seccon).append(seg);
                         });
-                        $this.addFkey = fkey;
+                        event.data.value.dbidset(fkey);
                     }
                 }); 
+            }
          }
          else{
-            $.get(urlbase+"seg/"+callback+"/"+fkey, function(seg){
-                $($this.seccon).append(seg);
+            $.get(urlbase+"seg/"+callback+"/add/"+fkey, function(seg){
+                $(event.data.value.seccon).append(seg);
             });
          }
      });
-     this.addFkey = $this.addFkey;
 }
 
 Btnset.prototype.edit = function(){
     $(this.btncon).append("<div id=\"edit\" title=\"edit\"></div>");
-    $this = this;
-    btn = this.btncon+" > #edit";
-    $(btn).button({
+    $(this.btncon+" > #edit").button({
         icons:{
             primary: icons.edit
         },
         text: false
     });
-    $(btn).click(function(){
-        $.get(urlbase+"seg/"+$this.table+"/edit/"+$this.dbid ,function(data){
-            $($this.seccon+" > #data").replaceWith(data);
+    $(this.btncon+" > #edit").on('click',{value:this}, function(event){
+        $.get(urlbase+"seg/"+event.data.value.table+"/edit/"+event.data.value.dbid ,function(data){
+            $(event.data.value.seccon+" > #data").replaceWith(data);
         });
-        $($this.btncon).children().remove();
-        $this.del();
-        $this.cancel();
-        $this.add($this.addCallback,$this.addTitle,$this.addFkey);
-        $this.save();   
+        $(event.data.value.btncon).children().remove();
+        event.data.value.del();
+        event.data.value.cancel();
+        event.data.value.add(event.data.value.addCallback,event.data.value.addTitle,event.data.value.addFkey);
+        event.data.value.save();   
     });        
 }
 Btnset.prototype.cancel = function(){
     $(this.btncon).append("<div id=\"cancel\" title=\"cancel\"></div>");
-    btn = this.btncon+" > #cancel";
-    $this = this;
-    $(btn).button({
+    $(this.btncon+" > #cancel").button({
         icons:{
             primary: icons.cancel
         },
         text: false
     });
-    $(btn).click(function(){
-        $.get(urlbase+"seg/"+$this.table+"/data/"+$this.dbid ,function(data){
-            $($this.seccon+" > #data").replaceWith(data);
+    $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
+        $.get(urlbase+"seg/"+event.data.value.table+"/data/"+event.data.value.dbid ,function(data){
+            $(event.data.value.seccon+" > #data").replaceWith(data);
         });
     });        
 }
 
 Btnset.prototype.del = function(){
     $(this.btncon).append("<div id=\"delete\" title=\"delete\"></div>");
-    btn = this.btncon+" > #delete";
-    $this = this;
-    $(btn).button({
+    $(this.btncon+" > #delete").button({
         icons:{
             primary: icons.del
         },
         text: false
     });
-    $(btn).click(function(){//add dialogbox and validation 
-        $.get(urlbase+"seg/"+$this.table+"/delete/"+$this.dbid ,function(data){
+   $(this.btncon+" > #delete").on('click',{value:this}, function(event){//add dialogbox and validation 
+        $.get(urlbase+"seg/"+event.data.value.table+"/delete/"+event.data.value.dbid ,function(data){
         });
-        $.get(urlbase+"seg/"+$this.table+"/add/",function(data){
-            $("#"+$this.id).replaceWith(data);
-        });   
+        $(event.data.value.seccon).remove();
+       // $.get(urlbase+"seg/"+event.data.value.table+"/add/",function(data){
+       //     $("#"+event.data.value.id).replaceWith(data);
+      //  });   
     });
 }
 Btnset.prototype.save = function(){
-     $(this.btncon).append("<div id=\"save\" title=\"save\"></div>");
-    $this = this;
-    btn = this.btncon+" > #save";
-    $(btn).button({
+    $(this.btncon).append("<div id=\"save\" title=\"save\"></div>");
+    $(this.btncon+" > #save").button({
         icons:{
             primary: icons.save
         },
         text: false
     });
-    $(btn).click(function(){
-        isgood = $this.validator();
+    $(this.btncon+" > #save").on('click',{value:this}, function(event){
+        isgood = event.data.value.validator();
+        $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click'); 
+         var stu = event.data.value;
+        //console.log(stu);
         if(isgood === true){
              $.ajax({
-                    type: 'POST',
-                    data: $($this.seccon+" #data > form").serialize(),
-                    url: urlbase+"seg/"+$this.table+"/save/"+$this.dbid,
-                    success: function(id){
-                        if(id == 0){
-                            id = $this.dbid;
-                        }
-                        $.get(urlbase+"seg/"+$this.table+"/view/"+id ,function(data){
-                           $($this.seccon+" #save:not("+btn+")").click();
-                           $("#"+$this.id).replaceWith(data);
-                        });
+                type: 'POST',
+                data: $(event.data.value.seccon+" > #data > form").serialize(),
+                url: urlbase+"seg/"+stu.table+"/save/"+stu.dbid,
+                success: function(id){
+                    console.log(stu.table);
+                    if(id == 0){
+                       id = stu.dbid;
                     }
-                }); 
+                   
+                    $.get(urlbase+"/seg/"+stu.table+"/view/"+id ,function(data){
+                       console.log(stu);
+                       $("#"+stu.id).replaceWith(data);
+                    });
+                }
+            }); 
         }
    });
 }
 
  Btnset.prototype.validator = function(){
-     $this = this;
-     $(this.seccon+" > #data .u-fucked-up").removeClass("u-fucked-up")
-     $("#"+this.table+this.id+"validate").text("");
-    $.each(vald[this.table], function(k,v){
-        flag = false;
-        if(v == "required"){
-            isgood = $($this.seccon +" > #data #"+k).val();
-            if(isgood == ""){
-                $("#"+$this.table+$this.id+"validate").append("<strong>"+k+"</strong> is required<br/>");
-                flag = true;
-                $($this.seccon +" > #data #"+k).addClass("u-fucked-up");
+    $this = this;
+    $(this.seccon+" > #data .u-fucked-up").removeClass("u-fucked-up")
+    $("#"+this.table+this.id+"validate").text("");
+    if(vald[this.table]){
+       $.each(vald[this.table], function(k,v){
+          flag = false;
+          if(v == "required"){
+              isgood = $($this.seccon +" > #data #"+k).val();
+              if(isgood == ""){
+                  $("#"+$this.table+$this.id+"validate").append("<strong>"+k+"</strong> is required<br/>");
+                  flag = true;
+                  $($this.seccon +" > #data #"+k).addClass("u-fucked-up");
+                }
+             }
+        });
+        if(flag == true){
+            $("#"+$this.table+$this.id+"validate").dialog({
+                 modal: true,
+                 buttons:{
+                     Ok: function(){
+                         $(this).dialog("close");
+                     }
+                 }
+             });
+             return false;
+            }
+            else{
+                return true;
             }
         }
-    });
-    if(flag == true){
-        $("#"+this.table+this.id+"validate").dialog({
-             modal: true,
-             buttons:{
-                 Ok: function(){
-                     $(this).dialog("close");
-                 }
-             }
-         });
-         return false;
-    }
     else{
         return true;
     }
 }
-
+  
 Btnset.prototype.formFill = function(){
     $this = this;
-    $.get(urlbase+"seg/"+this.table+"/get/"+this.dbid ,function(data){
+    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
         $.each(data, function(k,v){
             $($this.seccon+" > #data  #"+k).val(v);
         });
@@ -185,7 +196,7 @@ Btnset.prototype.formFill = function(){
 
 Btnset.prototype.dataFill = function(title){
     $this = this;
-    $.get(urlbase+"seg/"+this.table+"/get/"+this.dbid ,function(data){
+    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
         $.each(data, function(k,v){
             if(k == title){
                 $($this.hedcon).prepend(v); 
@@ -198,15 +209,10 @@ Btnset.prototype.dataFill = function(title){
 }    
 
   
- /*  
-function validator(toCheck){
-    
-    else{
-    return true;
-    }
-}
+  
+
 function inhrt(o){
     function F(){};
     F.prototype = o;
     return new F();
-}*/
+}

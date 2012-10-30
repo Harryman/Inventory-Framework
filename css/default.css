@@ -161,6 +161,9 @@ header, section, footer, aside, nav, article, figure {
 .mar-right{
     margin-right: 7px;
 }
+.margin{
+    margin: 7px;
+}
 .smallbutton{
     padding:0px
 }

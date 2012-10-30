@@ -12,20 +12,21 @@ class Doc_function extends \libs\View {
         $this->id = $idr;
     }
  
-    function add(){
-        $this->start();
-        $this->edit();
+    function add($fkey){
+        $this->start("mar-left");
+        $this->edit($fkey);
         $this->end();
     }
-    function edit(){
+    function edit($fkey){
         $this->dataStart("Function");
         $this->inputField("text","func_name","Function: ","function name");
         $this->inputField("textarea","description","Description:","Describe the general purpose of this file",4);
         $this->inputField("textarea","code","Function code:","Paste function code here",9);
+        $this->inputField("hidden", "doc_id", $fkey);
         $this->scriptStart();
         $this->newBtns(" > h2 ");
-        if($this->id < 9999999){
-            $this->btnDel();
+        $this->btnDel();
+        if($this->id < 99999999){
             $this->btnCancel();
         }
         $this->btnAdd("doc_func_argument","Add an Argument",$this->id);
