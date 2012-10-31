@@ -77,7 +77,10 @@ Btnset.prototype.edit = function(){
         text: false
     });
     $(this.btncon+" > #edit").on('click',{value:this}, function(event){
-        $(event.data.value.seccon+" > div > div > div > h2 #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
+        if(event.hasOwnProperty('originalEvent')){
+             $(event.data.value.seccon+" #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
+             var isPar = true;
+        }
         var stu = event.data.value;
         $.get(urlbase+"seg/"+stu.table+"/edit/"+stu.dbid ,function(data){
             $(stu.seccon+" > #data").slideUp("fast",function(){
@@ -104,7 +107,10 @@ Btnset.prototype.cancel = function(){
         text: false
     });
     $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
-        $(event.data.value.seccon+" > div > div > div > h2 #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
+        if(event.hasOwnProperty('originalEvent')){
+            $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
+            var isPar = true;
+        }
         var stu = event.data.value;
         $.get(urlbase+"seg/"+stu.table+"/data/"+stu.dbid ,function(data){
             $(stu.seccon+" > #data").slideUp("fast",function(){
@@ -146,8 +152,12 @@ Btnset.prototype.save = function(){
     });
     $(this.btncon+" > #save").on('click',{value:this}, function(event){
         isgood = event.data.value.validator();
+        if(event.hasOwnProperty('originalEvent')){
+            $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
+            var isPar = true;
+        }
         if(isgood === true){
-            $(event.data.value.seccon+" > div > div > div > h2 #save:not("+event.data.value.btncon+" > #save)").trigger('click'); 
+            
             var stu = event.data.value;      
             $.ajax({
                 type: 'POST',
@@ -157,13 +167,15 @@ Btnset.prototype.save = function(){
                     if(id == 0){
                        id = stu.dbid;
                     }       
-                    $.get(urlbase+"seg/"+stu.table+"/view/"+id ,function(data){
-                        $("#"+stu.id).slideUp("fast",function(){
-                            $("#"+stu.id).replaceWith(data);
-                            $("#"+stu.id).hide();
-                            $("#"+stu.id).slideDown(function(){
+                    $("#"+stu.id).slideUp("fast",function(){
+                        if(isPar == true){
+                            $.get(urlbase+"seg/"+stu.table+"/view/"+id ,function(data){
+                                $("#"+stu.id).replaceWith(data);
+                                $("#"+stu.id).hide();
+                                $("#"+stu.id).slideDown(function(){
+                                });
                             });
-                        });
+                        }
                     });
                 }
             }); 
