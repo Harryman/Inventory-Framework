@@ -11,7 +11,6 @@ function Btnset(idr,tabler,container){
     this.seccon = "#"+this.id+" > #"+tabler;
     $(this.btncon).buttonset();
 }
-
 Btnset.prototype.dbidset = function(set){
     this.dbid = set;
 }
@@ -78,7 +77,7 @@ Btnset.prototype.edit = function(){
         text: false
     });
     $(this.btncon+" > #edit").on('click',{value:this}, function(event){
-        $(event.data.value.seccon+" #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
+        $(event.data.value.seccon+" > div > div > div > h2 #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
         var stu = event.data.value;
         $.get(urlbase+"seg/"+stu.table+"/edit/"+stu.dbid ,function(data){
             $(stu.seccon+" > #data").slideUp("fast",function(){
@@ -87,11 +86,11 @@ Btnset.prototype.edit = function(){
                     $(stu.seccon+" > #data").slideDown(function(){
                 });
             });
-        $(stu.btncon).children().remove();
-        stu.del();
-        stu.cancel();
-        stu.add(stu.addCallback,stu.addTitle,stu.addFkey);
-        stu.save(); 
+     //   $(stu.btncon).children().remove();
+     //   stu.del();
+    //    stu.cancel();
+    //    stu.add(stu.addCallback,stu.addTitle,stu.addFkey);
+     //   stu.save(); 
         });
   
     });        
@@ -105,7 +104,7 @@ Btnset.prototype.cancel = function(){
         text: false
     });
     $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
-        $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
+        $(event.data.value.seccon+" > div > div > div > h2 #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
         var stu = event.data.value;
         $.get(urlbase+"seg/"+stu.table+"/data/"+stu.dbid ,function(data){
             $(stu.seccon+" > #data").slideUp("fast",function(){
@@ -128,8 +127,8 @@ Btnset.prototype.del = function(){
     });
    $(this.btncon+" > #delete").on('click',{value:this}, function(event){//add dialogbox and validation 
         $.get(urlbase+"seg/"+event.data.value.table+"/delete/"+event.data.value.dbid ,function(data){
-            $(event.data.value.seccon).slideUp(function(){
-                $(event.data.value.seccon).remove();
+            $("#"+event.data.value.id).slideUp(function(){
+                $(this).remove();
             });
         });
        // $.get(urlbase+"seg/"+event.data.value.table+"/add/",function(data){
@@ -147,10 +146,10 @@ Btnset.prototype.save = function(){
     });
     $(this.btncon+" > #save").on('click',{value:this}, function(event){
         isgood = event.data.value.validator();
-        $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click'); 
-         var stu = event.data.value;
         if(isgood === true){
-             $.ajax({
+            $(event.data.value.seccon+" > div > div > div > h2 #save:not("+event.data.value.btncon+" > #save)").trigger('click'); 
+            var stu = event.data.value;      
+            $.ajax({
                 type: 'POST',
                 data: $(stu.seccon+" > #data form").serialize(),
                 url: urlbase+"seg/"+stu.table+"/save/"+stu.dbid,
@@ -171,7 +170,7 @@ Btnset.prototype.save = function(){
         }
    });
 }
-
+    
  Btnset.prototype.validator = function(){
     $this = this;
     $(this.seccon+" > #data .u-fucked-up").removeClass("u-fucked-up")

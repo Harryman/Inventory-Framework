@@ -10,4 +10,5 @@
     </head>
     <body>
         <div id="header"></div>
+        <div id="validate"></div>
         <div class="container" id="content">
