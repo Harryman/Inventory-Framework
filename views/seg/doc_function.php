@@ -13,7 +13,7 @@ class Doc_function extends \libs\View {
     }
  
     function add($fkey){
-        $this->start("mar-left");
+        $this->start("margin");
         $this->edit($fkey);
         $this->end();
     }
