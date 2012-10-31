@@ -10,5 +10,5 @@
     </head>
     <body>
         <div id="header"></div>
-        <div id="validate"></div>
+        <div id="validate" title="You have fucked up now"></div>
         <div class="container" id="content">

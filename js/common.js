@@ -151,13 +151,18 @@ Btnset.prototype.save = function(){
         text: false
     });
     $(this.btncon+" > #save").on('click',{value:this}, function(event){
-        isgood = event.data.value.validator();
+        var go = true
         if(event.hasOwnProperty('originalEvent')){
-            $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
+            isgood = event.data.value.validator(event.data.value.seccon);  
+            if(isgood == true){
+                $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
+            }
+            else{
+                go = false
+            }
             var isPar = true;
         }
-        if(isgood === true){
-            
+        if(go == true){
             var stu = event.data.value;      
             $.ajax({
                 type: 'POST',
@@ -182,8 +187,42 @@ Btnset.prototype.save = function(){
         }
    });
 }
+Btnset.prototype.validator = function(parent){
+    flag = false;
+    $("#validate").empty();
+    $.each(vald,function(t){
+        $.each(vald[t],function(k,v){
+            if($(parent+"#"+t+" > #data form #"+k).length){
+                if(v == "required"){
+                    $("#"+t+" > #data form #"+k).each(function(p){
+                        val =  $(this).val();
+                        if(val == ""){
+                            $("#validate").append("<strong>"+k+"</strong> is required<br/>");
+                            flag = true;
+                            $(this).addClass("u-fucked-up");
+                        }
+                    });
+                }
+             }
+        });
+    });
+    if(flag == true){
+        $("#validate").dialog({
+            modal: true,
+            buttons:{
+                Ok: function(){
+                    $(this).dialog("close");
+                }
+            }
+        });
+    return false
+    }
+    else{
+        return true;
+    }
+}
     
- Btnset.prototype.validator = function(){
+ /*Btnset.prototype.validator = function(){
     $this = this;
     $(this.seccon+" > #data .u-fucked-up").removeClass("u-fucked-up")
     $("#"+this.table+this.id+"validate").text("");
@@ -217,7 +256,7 @@ Btnset.prototype.save = function(){
     else{
         return true;
     }
-}
+}*/
   
 Btnset.prototype.formFill = function(){
     var $this = this;
