@@ -72,14 +72,22 @@ Btnset.prototype.edit = function(){
         text: false
     });
     $(this.btncon+" > #edit").on('click',{value:this}, function(event){
-        $.get(urlbase+"seg/"+event.data.value.table+"/edit/"+event.data.value.dbid ,function(data){
-            $(event.data.value.seccon+" > #data").replaceWith(data);
+        $(event.data.value.seccon+" #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
+        var stu = event.data.value;
+        $.get(urlbase+"seg/"+stu.table+"/edit/"+stu.dbid ,function(data){
+            $(stu.seccon+" > #data").slideUp("fast",function(){
+                $(stu.seccon+" > #data").replaceWith(data);
+                $(stu.seccon+" > #data").hide();
+                    $(stu.seccon+" > #data").slideDown(function(){
+                });
+            });
+        $(stu.btncon).children().remove();
+        stu.del();
+        stu.cancel();
+        stu.add(stu.addCallback,stu.addTitle,stu.addFkey);
+        stu.save(); 
         });
-        $(event.data.value.btncon).children().remove();
-        event.data.value.del();
-        event.data.value.cancel();
-        event.data.value.add(event.data.value.addCallback,event.data.value.addTitle,event.data.value.addFkey);
-        event.data.value.save();   
+  
     });        
 }
 Btnset.prototype.cancel = function(){
@@ -92,8 +100,14 @@ Btnset.prototype.cancel = function(){
     });
     $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
         $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
-        $.get(urlbase+"seg/"+event.data.value.table+"/data/"+event.data.value.dbid ,function(data){
-            $(event.data.value.seccon+" > #data").replaceWith(data);
+        var stu = event.data.value;
+        $.get(urlbase+"seg/"+stu.table+"/data/"+stu.dbid ,function(data){
+            $(stu.seccon+" > #data").slideUp("fast",function(){
+                $(stu.seccon+" > #data").replaceWith(data);
+                $(stu.seccon+" > #data").hide();
+                    $(stu.seccon+" > #data").slideDown(function(){
+                });
+            });
         });
     });        
 }
@@ -130,7 +144,7 @@ Btnset.prototype.save = function(){
         if(isgood === true){
              $.ajax({
                 type: 'POST',
-                data: $(event.data.value.seccon+" > #data > form").serialize(),
+                data: $(stu.seccon+" > #data > form").serialize(),
                 url: urlbase+"seg/"+stu.table+"/save/"+stu.dbid,
                 success: function(id){
                     if(id == 0){
@@ -182,7 +196,7 @@ Btnset.prototype.save = function(){
 }
   
 Btnset.prototype.formFill = function(){
-    $this = this;
+    var $this = this;
     $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
         $.each(data, function(k,v){
             $($this.seccon+" > #data  #"+k).val(v);

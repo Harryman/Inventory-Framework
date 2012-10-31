@@ -19,7 +19,7 @@ class Doc_function extends \libs\Controller {
     }
     function edit($id = null){
         $this->doc_functionV = new vs\doc_function($id);
-        $this->doc_functionV->edit();
+        $this->doc_functionV->edit($id);
     }
     function view($id){
        $this->doc_functionV = new vs\doc_function($id);

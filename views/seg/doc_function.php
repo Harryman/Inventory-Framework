@@ -36,7 +36,7 @@ class Doc_function extends \libs\View {
         $this->dataEnd();      
     }
     function view(){
-        $this->start();
+        $this->start("margin");
         $this->data();
         $this->end();
     }
