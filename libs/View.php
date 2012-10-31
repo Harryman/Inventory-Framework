@@ -31,8 +31,8 @@ class View {
           <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">
             </div></h2><div id=\"".$this->table.$this->id."validate\" title=\"You have fucked up now\"></div>
             <div class=\"clearfloat\"></div>
-                <form\">
-                 <div class=\"mar-left\">";
+                  <div class=\"mar-left\">
+                <form>";
         }
         function dataEnd(){
             echo"</form></div></div>";

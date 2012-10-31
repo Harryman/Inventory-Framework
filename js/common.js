@@ -144,7 +144,7 @@ Btnset.prototype.save = function(){
         if(isgood === true){
              $.ajax({
                 type: 'POST',
-                data: $(stu.seccon+" > #data > form").serialize(),
+                data: $(stu.seccon+" > #data form").serialize(),
                 url: urlbase+"seg/"+stu.table+"/save/"+stu.dbid,
                 success: function(id){
                     if(id == 0){
