@@ -48,7 +48,10 @@ Btnset.prototype.add = function(callback, title, fkey){
                             fkey = event.data.value.id;
                         }
                         $.get(urlbase+"seg/"+callback+"/add/"+fkey+"/", function(seg){
-                            $(event.data.value.seccon).append(seg);
+                            $(event.data.value.seccon+" > #data").after(seg);
+                            $(event.data.value.seccon+" > #data").next().hide();
+                            $(event.data.value.seccon+" > #data").next().slideDown(function(){
+                            });
                         });
                         event.data.value.dbidset(fkey);
                     }
@@ -57,7 +60,10 @@ Btnset.prototype.add = function(callback, title, fkey){
          }
          else{
             $.get(urlbase+"seg/"+callback+"/add/"+fkey, function(seg){
-                $(event.data.value.seccon).append(seg);
+                $(event.data.value.seccon+" > #data").after(seg);
+                $(event.data.value.seccon+" > #data").next().hide();
+                $(event.data.value.seccon+" > #data").next().slideDown(function(){
+                });
             });
          }
      });
@@ -122,8 +128,10 @@ Btnset.prototype.del = function(){
     });
    $(this.btncon+" > #delete").on('click',{value:this}, function(event){//add dialogbox and validation 
         $.get(urlbase+"seg/"+event.data.value.table+"/delete/"+event.data.value.dbid ,function(data){
+            $(event.data.value.seccon).slideUp(function(){
+                $(event.data.value.seccon).remove();
+            });
         });
-        $(event.data.value.seccon).remove();
        // $.get(urlbase+"seg/"+event.data.value.table+"/add/",function(data){
        //     $("#"+event.data.value.id).replaceWith(data);
       //  });   
@@ -151,7 +159,12 @@ Btnset.prototype.save = function(){
                        id = stu.dbid;
                     }       
                     $.get(urlbase+"seg/"+stu.table+"/view/"+id ,function(data){
-                       $("#"+stu.id).replaceWith(data);
+                        $("#"+stu.id).slideUp("fast",function(){
+                            $("#"+stu.id).replaceWith(data);
+                            $("#"+stu.id).hide();
+                            $("#"+stu.id).slideDown(function(){
+                            });
+                        });
                     });
                 }
             }); 
