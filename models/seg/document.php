@@ -17,4 +17,8 @@ class Document extends \libs\Model {
     function del($id){
         $this->delSeg("doc_id", $id);
     }
+    function getFkey($fkey){
+        $ret = $this->getColWhere("func_id", "doc_function", "doc_id", $fkey);
+        return $ret;
+    }
 }

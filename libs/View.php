@@ -31,7 +31,7 @@ class View {
           <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\">
             </div></h2><div id=\"".$this->table.$this->id."validate\" title=\"You have fucked up now\"></div>
             <div class=\"clearfloat\"></div>
-                <form class=\"mar-laft\">
+                <form\">
                  <div class=\"mar-left\">";
         }
         function dataEnd(){
@@ -80,6 +80,10 @@ class View {
             echo $handle.".del();
                 ";
         }
+      //  function getFseg($table, $id){
+     //       $this->id = $fkey;
+      //      echo"$.get(urlbase+\"seg/".$table."\"/view/1/"
+      //  }
             
         function newBtns($container,$inst = "1"){
             $handle = $this->table.$this->id.$inst;

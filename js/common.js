@@ -191,11 +191,11 @@ Btnset.prototype.formFill = function(){
 }
 
 Btnset.prototype.dataFill = function(title){
-    $this = this;
-    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
+    var $this = this;
+    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid+"",function(data){
         $.each(data, function(k,v){
             if(k == title){
-                $($this.hedcon).prepend(v); 
+                $($this.hedcon).prepend(v);
             }
             else{
                 $($this.seccon+" > #data #"+k).text(v);

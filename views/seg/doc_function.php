@@ -35,12 +35,12 @@ class Doc_function extends \libs\View {
         $this->scriptEnd();
         $this->dataEnd();      
     }
-    function view($fkey){
+    function view(){
         $this->start();
-        $this->data($fkey);
+        $this->data();
         $this->end();
     }
-    function data($fkey){
+    function data(){
         $this->dataStart();
         echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"description\"></div></div><br/>
             <div>Full Code:<div id=\"toggle_code\"></div><div class=\"code\" id=\"code\" style=\"display: none\">blah</div></div></div>";

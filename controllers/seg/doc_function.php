@@ -21,21 +21,13 @@ class Doc_function extends \libs\Controller {
         $this->doc_functionV = new vs\doc_function($id);
         $this->doc_functionV->edit();
     }
-    function view($id,$fkey = null){
+    function view($id){
        $this->doc_functionV = new vs\doc_function($id);
        $this->doc_functionV->view();
     }
-    function data($id,$fkey = NULL){
+    function data($id){
         $this->doc_functionV = new vs\doc_function($id);
-        if(!$fkey){
-            $this->doc_functionV->data();
-        }
-        else{
-            $ids = $this->doc_functionM->getFkey($fkey);
-            foreach($ids as $ent){
-                $this->view($ent);
-            }
-        }
+        $this->doc_functionV->data();
     }
     function delete($id){
         $this->doc_functionM->del($id);
