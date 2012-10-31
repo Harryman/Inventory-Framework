@@ -1,135 +1,66 @@
 <?php
 namespace views\seg;
-class TEMPLATE extends \libs\View {
+class XYZ extends \libs\View {
 
-    function __construct() {
+    protected $table = "XYZ";
+    protected $id;
+    function __construct($idr = Null){
         parent::__construct();
+        if($idr == Null){
+            $idr = mt_rand(100000000,mt_getrandmax());
+        }
+        $this->id = $idr;
     }
-    
-    function input($id){
-        if ($id == "rand") {
-            $noid = true;
-            $id = mt_rand();
-        }
-        else{
-            $noid = false;
-        }
-            echo "<div id=\"".$id ."\" >
-                    <div id=\"TEMPLATE\" class=\"text ui-widget-content ui-corner-all\"> 
-                    <h1 class=\"ui-widget-header ui-corner-all\">TEMPLATE</h3>
-                    <div id=\"form\" style=\"float:left;\">
-                        <form><p>Namespace:
-                            <input type=\"text\" name=\"namespace\" id=\"namespace\" placeholder=\"/name/space\" required=\"true\"/ class=\"text ui-widget-content ui-corner-all\"><br/>Description:<br/>
-                            <textarea  cols=\"75\" rows=\"3\" name=\"description\" id=\"description\" placeholder=\"Describe the class's use\"class=\"text ui-widget-content ui-corner-all\"></textarea></p>
-                        </form>
-                    </div>
-                    <div class=\"buttons\">
-                        <div id=\"addfunc\"> Add a Function</div>
-                        <div id=\"submit\" >Submit</div>
-                                    <script>
-$(function(){";
-            if($noid==false){
-                echo"var id = ".$id.";
-                  $.get(\"".URL."seg/TEMPLATE/get/\"+id, function(data){              
-                         $(\"#\"+id+\" > #TEMPLATE > #form  #namespace\").val(data.namespace);
-                         $(\"#\"+id+\" > #TEMPLATE > #form  #description\").val(data.description);
-                  });";
-            }
-            else{
-                echo"var id;";
-            }
-            echo"
-    $(\"#".$id." > #TEMPLATE > .buttons div\").button();
-
-    $(\"#".$id." > #TEMPLATE > .buttons > #submit\").click(function(){
-        var isgood = $(\"#".$id." > #TEMPLATE > #form > form > #namespace\").val();
-        if(isgood != \"\"){
-            $.ajax({
-                type: 'POST',
-                data: $(\"#".$id." > #TEMPLATE > #form form\").serialize(),
-                url: \"" . URL . "seg/TEMPLATE/insert/\"+id,
-                success: function(data){
-                     $.get(\"".URL."seg/TEMPLATE/show/\"+data+\"/".$id."\",function(ret){
-                         $(\"#".$id." > #TEMPLATE\").replaceWith(ret);
-                             $(\"#".$id." #parent_submit\").click();
-                        });";
-                     if($noid == true){
-                     echo"$.get(\"".URL."seg/TEMPLATE/input/rand\", function (ret){
-                         $(\".container\").prepend(ret);                      
-                        });";
-                     }
-                     echo"
-                }
-          });
-        }
-        else{
-            alert(\"Namespace is required\");
-        }
-    });
-
-   $(\"#".$id." > #TEMPLATE #addfunc\").click(function(){
-          $.ajax({
-                type: 'POST',
-                data: $(\"#".$id." > #TEMPLATE > #form form\").serialize(),
-                url: \"" . URL . "seg/TEMPLATE/insert/\"+id,
-                success: function(data){
-                    $.get(\"".URL."seg/TEMPLATE/input/data\", function(data){
-            });
-        
-        $.get(\"".URL."seg/doc_function/input/\", function(data){
-             $(\"#content\").remove();
-        });
-        }
-   });
-});
-});
-        </script>
-                    </div>
-                <p style=\"display: block; clear: both\"></p>
-                </div>
-            </div>";
+ 
+    function add($fkey){
+        $this->start("CLASS TO APPLY TO CONTAINING DIV");
+        $this->edit($fkey);
+        $this->end();
     }
-    
-    function show($id,$rapt){
-        if($id == 0){
-            $id = $rapt;
+    function edit($fkey){
+        $this->dataStart("FIELD TITLE");
+        $this->inputField("text","func_name","Function: ","function name");
+        $this->inputField("textarea","description","Description:","Describe the general purpose of this file",4);
+        $this->inputField("textarea","code","Function code:","Paste function code here",9);
+        $this->inputField("hidden", "doc_id", $fkey);
+        $this->scriptStart();
+        $this->newBtns(" > h2 ");
+        $this->btnDel();
+        if($this->id < 99999999){
+            $this->btnCancel();
         }
-        if($rapt == "no"){
-            echo "<div id=\"".$id."\"class=\"ui-widget-content ui-corner-all\")>";
-            }
-        echo"<div id=\"TEMPLATE\" class=\"ui-widget-content ui-corner-all\">
-                <h2 id=\"namespace\" class=\"ui-widget-header ui-corner-all\"></h2>
-                <div id=\"data\" class=\"fltlft\">
-                    <p id=\"description\">Description: </p>
-                </div>
-                <div class=\"buttons\">
-                    <div id=\"edit\" class=\"ui-state-default ui-corner-all\" title=\"Edit\">
-                    <span class=\"ui-icon ui-icon-gear\"></span>
-                    <script>
-                    $(function(){
-                        $.get(\"".URL."seg/TEMPLATE/get/".$id."\",function(data){
-                            $(\"#".$rapt." > #TEMPLATE > #namespace \").text(data.namespace);
-                            $(\"#".$rapt." > #TEMPLATE  #description \").append(data.description);
-                        });
-                                
-                        $(\"#".$rapt." > #TEMPLATE > .buttons > #edit\").button();
-                        $(\"#".$rapt." > #TEMPLATE > .buttons > #edit\").click(function(){
-                            $.get(\"".URL."seg/TEMPLATE/input/".$id."\",function(ret){
-                                $(\"#".$rapt."\").replaceWith(ret);
-                                    $(\"#".$id." #edit\").click();
-                            });
-                        });
-                    });
-
-                   </script>
-                   </div>
-               </div>
-               <p style=\"display: block; clear: both\"></p>
-           </div>";
-if($rapt == 0 ){
-    echo"</div>";
-}
-                
-               
+        $this->btnAdd("doc_func_argument","Add an Argument",$this->id);
+        $this->btnSave();
+        echo $this->handle.".formFill();";
+        $this->scriptEnd();
+        $this->dataEnd();      
+    }
+    function view(){
+        $this->start("USE MARGIN FOR CHILDREN LEAVE BLANK FOR PARENT");
+        $this->data();
+        $this->end();
+    }
+    function data(){
+        $this->dataStart();
+        echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"description\"></div></div><br/>
+            <div>Full Code:<div id=\"toggle_code\"></div><div class=\"code\" id=\"code\" style=\"display: none\">blah</div></div></div>";
+        $this->scriptStart();
+        $ts = $this->newBtns(" > h2");
+        $this->btnEdit($ts);
+        echo $this->handle.".dataFill(\"func_name\");
+         $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").button();
+                        $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
+                        $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").click(function(){
+                            $(\"#".$this->id." > #".$this->table." > #data  #code \").toggle(\"blind\",350);
+                                if($(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text() == \"show\"){
+                                    $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"hide\");
+                                }
+                                else{
+                                $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
+                                }
+                        });";
+        $this->scriptEnd();
+        $this->dataEnd();
     }
 }
+  

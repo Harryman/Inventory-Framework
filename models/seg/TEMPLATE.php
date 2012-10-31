@@ -1,28 +1,25 @@
 <?php
 namespace models\seg;
-class TEMPLATE extends \libs\Model {
-
+class Document extends \libs\Model {
+    public $table = "document";
+    public $key = "key colomn";
     function __construct() {
         parent::__construct();
     }
-   
+    
     function insert($id){
-           $st = $this->db->prepare("INSERT INTO `TEMPLATE`(`doc_id`, `namespace`, `description`) VALUES (:doc_id,:namespace,:description) ON DUPLICATE KEY UPDATE `namespace` = VALUES(`namespace`), `description` = VALUES(`description`)");
-           $st->execute([':doc_id'=> $id,':namespace'=>$_POST['namespace'],':description'=>$_POST['description']]);
-           $ret = $this->db->lastInsertId();
-           echo $ret;
+       $ret = $this->insertSeg([$this->key,"ARRAY","OF","COLUMNS","NAMED THE SAME AS FIELD NAMES"],$id);
+       echo $ret; 
     }
     function get($id){
-        $st = $this->db->prepare("SELECT * FROM `TEMPLATE` WHERE `doc_id` = :id");
-        $st->execute([':id'=>$id]);
-        
-       $result = $st->fetch(\PDO::FETCH_ASSOC);
-       $result = json_encode($result);
-       header('Content-Type: application/json');
-        echo($result);
+        $ret = $this->getSeg($this->key, $id);
+        echo $ret;
     }
-    
-
-    
-
+    function del($id){
+        $this->delSeg($this->key, $id);
+    }
+    function getFkey($fkey){
+        $ret = $this->getColWhere("CHILD ID", "CHILD TABLE", "FOREIGN KEY COLMN", $fkey);
+        return $ret;
+    }
 }
