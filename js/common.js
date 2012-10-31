@@ -35,7 +35,6 @@ Btnset.prototype.add = function(callback, title, fkey){
         },
         text: false
     });
-    var dbid;
     $(this.btncon+" > #add").on('click',{value:this}, function(event){
         if(!event.data.value.addFkey){
             isgood = event.data.value.validator();
@@ -92,6 +91,7 @@ Btnset.prototype.cancel = function(){
         text: false
     });
     $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
+        $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
         $.get(urlbase+"seg/"+event.data.value.table+"/data/"+event.data.value.dbid ,function(data){
             $(event.data.value.seccon+" > #data").replaceWith(data);
         });
@@ -127,20 +127,16 @@ Btnset.prototype.save = function(){
         isgood = event.data.value.validator();
         $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click'); 
          var stu = event.data.value;
-        //console.log(stu);
         if(isgood === true){
              $.ajax({
                 type: 'POST',
                 data: $(event.data.value.seccon+" > #data > form").serialize(),
                 url: urlbase+"seg/"+stu.table+"/save/"+stu.dbid,
                 success: function(id){
-                    console.log(stu.table);
                     if(id == 0){
                        id = stu.dbid;
-                    }
-                   
-                    $.get(urlbase+"/seg/"+stu.table+"/view/"+id ,function(data){
-                       console.log(stu);
+                    }       
+                    $.get(urlbase+"seg/"+stu.table+"/view/"+id ,function(data){
                        $("#"+stu.id).replaceWith(data);
                     });
                 }

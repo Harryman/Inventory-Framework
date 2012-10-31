@@ -40,13 +40,13 @@ class Model {
         protected function getCol($col,$table){
             $st = $this->db->prepare("SELECT ".$col." FROM ".$table." WHERE 1=1");
             $st->execute();
-            $result = $st->fetch(\PDO::FETCH_ASSOC);
+            $result = $st->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
         }
         protected function getColWhere($col, $table, $where, $is){
             $st = $this->db->prepare("SELECT ".$col." FROM ".$table." WHERE ".$where."= :is");
             $st->execute([":is"=>$is]);
-            $result = $st->fetch();
+            $result = $st->fetchAll(\PDO::FETCH_COLUMN);
             return $result;
             }
         protected function getAC($table,$label,$value,$like){

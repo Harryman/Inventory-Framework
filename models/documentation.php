@@ -10,7 +10,7 @@ class Documentation extends \libs\Model {
     }
     function term($term){
         $that = $this->getColWhere("doc_id", "document", "namespace", $term);
-        return $that['doc_id'];
+        return $that[0];
     }
     function ac($namespace){
         header('Content-Type: application/json');

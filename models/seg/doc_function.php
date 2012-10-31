@@ -13,6 +13,10 @@ class Doc_function extends \libs\Model {
         $ret = $this->getSeg("func_id", $id);
         echo $ret;
     }
+    function getFkey($fkey){
+        $ret = $this->getColWhere("func_id", "doc_function", "doc_id", $fkey);
+        return $ret;
+    }
     function del($id){
         $this->delSeg("func_id", $id);
     }
