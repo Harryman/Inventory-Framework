@@ -36,11 +36,11 @@ Btnset.prototype.add = function(callback, title, fkey){
     });
     $(this.btncon+" > #add").on('click',{value:this}, function(event){
         if(!event.data.value.addFkey){
-            isgood = event.data.value.validator();
+            isgood = event.data.value.validator(event.data.value.seccon);
             if(isgood === true){
                 $.ajax({
                     type: 'POST',
-                    data: $(event.data.value.seccon+" #data > form").serialize(),
+                    data: $(event.data.value.seccon+" #data form").serialize(),
                     url: urlbase+"seg/"+event.data.value.table+"/save/",
                     success: function(fkey){
                         if(fkey == 0){
@@ -192,7 +192,7 @@ Btnset.prototype.validator = function(parent){
     $("#validate").empty();
     $.each(vald,function(t){
         $.each(vald[t],function(k,v){
-            if($(parent+"#"+t+" > #data form #"+k).length){
+            if($(parent+" #"+t+" #"+k).length){
                 if(v == "required"){
                     $("#"+t+" > #data form #"+k).each(function(p){
                         val =  $(this).val();
