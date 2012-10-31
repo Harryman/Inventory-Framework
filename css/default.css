@@ -163,6 +163,7 @@ header, section, footer, aside, nav, article, figure {
 }
 .margin{
     margin: 7px;
+     margin-left: 15px;
 }
 .smallbutton{
     padding:0px
