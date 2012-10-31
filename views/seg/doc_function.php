@@ -48,15 +48,15 @@ class Doc_function extends \libs\View {
         $ts = $this->newBtns(" > h2");
         $this->btnEdit($ts);
         echo $this->handle.".dataFill(\"func_name\");
-         $(\"#".$this->id." > #document > #data #toggle_code\").button();
-                        $(\"#".$this->id." > #document > #data #toggle_code\").text(\"show\");
-                        $(\"#".$this->id." > #document > #data #toggle_code\").click(function(){
-                            $(\"#".$this->id." > #document > #data  #code \").toggle(\"blind\",350);
-                                if($(\"#".$this->id." > #document > #data #toggle_code\").text() == \"show\"){
-                                    $(\"#".$this->id." > #document > #data #toggle_code\").text(\"hide\");
+         $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").button();
+                        $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
+                        $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").click(function(){
+                            $(\"#".$this->id." > #".$this->table." > #data  #code \").toggle(\"blind\",350);
+                                if($(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text() == \"show\"){
+                                    $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"hide\");
                                 }
                                 else{
-                                $(\"#".$this->id." > #document > #data #toggle_code\").text(\"show\");
+                                $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
                                 }
                         });";
         $this->scriptEnd();
