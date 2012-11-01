@@ -72,7 +72,12 @@ class Model {
                 $valstr .= "?,"; 
                 if($col[0] != $val){
                     $upstr .= "`".$val."` = VALUES(`".$val."`) ,";
-                    $exarr[$idx] = $_POST[$val];
+                    if(isset($_POST[$val])){
+                        $exarr[$idx] = $_POST[$val];
+                    }
+                    else{
+                        $exarr[$idx] = 1;
+                        }
                     $idx++;
                 }
                 else{
