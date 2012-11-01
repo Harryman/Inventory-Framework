@@ -41,10 +41,10 @@ Btnset.prototype.add = function(callback, title, fkey){
                 $.ajax({
                     type: 'POST',
                     data: $(event.data.value.seccon+" #data form").serialize(),
-                    url: urlbase+"seg/"+event.data.value.table+"/save/",
+                    url: urlbase+"seg/"+event.data.value.table+"/save/"+event.data.value.dbid,
                     success: function(fkey){
                         if(fkey == 0){
-                            fkey = event.data.value.id;
+                            fkey = event.data.value.dbid;
                         }
                         $.get(urlbase+"seg/"+callback+"/add/"+fkey+"/", function(seg){
                             $(event.data.value.seccon+" > #data").after(seg);
