@@ -22,7 +22,7 @@ class XYZ extends \libs\View {
         $this->inputField("text","func_name","Function: ","function name");
         $this->inputField("textarea","description","Description:","Describe the general purpose of this file",4);
         $this->inputField("textarea","code","Function code:","Paste function code here",9);
-        $this->inputField("hidden", "doc_id", $fkey);
+        $this->inputField("hidden", "FKEY", $fkey);
         $this->scriptStart();
         $this->newBtns(" > h2 ");
         $this->btnDel();
@@ -36,29 +36,17 @@ class XYZ extends \libs\View {
         $this->dataEnd();      
     }
     function view(){
-        $this->start("USE MARGIN FOR CHILDREN LEAVE BLANK FOR PARENT");
+        $this->start("margin");
         $this->data();
         $this->end();
     }
     function data(){
         $this->dataStart();
-        echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"description\"></div></div><br/>
-            <div>Full Code:<div id=\"toggle_code\"></div><div class=\"code\" id=\"code\" style=\"display: none\">blah</div></div></div>";
+        echo"<div class=\"mar-left\">HTML FOR DISPLAY element with colum ids will have the data appended to it </div>";
         $this->scriptStart();
         $ts = $this->newBtns(" > h2");
         $this->btnEdit($ts);
-        echo $this->handle.".dataFill(\"func_name\");
-         $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").button();
-                        $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
-                        $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").click(function(){
-                            $(\"#".$this->id." > #".$this->table." > #data  #code \").toggle(\"blind\",350);
-                                if($(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text() == \"show\"){
-                                    $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"hide\");
-                                }
-                                else{
-                                $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
-                                }
-                        });";
+        echo $this->handle.".dataFill(\"COLOMN NAME FOR HEADER\");";
         $this->scriptEnd();
         $this->dataEnd();
     }

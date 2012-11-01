@@ -20,7 +20,7 @@ class XYZ extends \libs\Controller {
     }
     function edit($id = null){
         $this->XYZV = new vs\XYZ($id);
-        $this->XYZV->edit();
+        $this->XYZV->edit($id);
     }
     function view($id){
         $this->XYZV = new vs\XYZ($id);
