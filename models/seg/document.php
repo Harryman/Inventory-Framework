@@ -2,6 +2,7 @@
 namespace models\seg;
 class Document extends \libs\Model {
     public $table = "document";
+    public $key = "doc_id";
     function __construct() {
         parent::__construct();
     }
@@ -11,8 +12,11 @@ class Document extends \libs\Model {
        echo $ret; 
     }
     function get($id){
-        $ret = $this->getSeg("doc_id", $id);
-        echo $ret;
+        $ret = $this->getSeg($this->key, $id);
+        $result = json_encode($ret);
+        header('Content-Type: application/json');
+        return $ret;
+        echo $result;
     }
     function del($id){
         $this->delSeg("doc_id", $id);

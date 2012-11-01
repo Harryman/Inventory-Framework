@@ -13,7 +13,10 @@ class Document extends \libs\Model {
     }
     function get($id){
         $ret = $this->getSeg($this->key, $id);
-        echo $ret;
+        $result = json_encode($ret);
+        header('Content-Type: application/json');
+        return $ret;
+        echo $result;
     }
     function del($id){
         $this->delSeg($this->key, $id);

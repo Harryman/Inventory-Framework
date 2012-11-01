@@ -11,9 +11,12 @@ class Doc_func_argument extends \libs\Model {
        $ret = $this->insertSeg(["arg_id","func_id","arg","arg_desc"],$id);
        echo $ret; 
     }
-    function get($id){
+      function get($id){
         $ret = $this->getSeg($this->key, $id);
-        echo $ret;
+        $result = json_encode($ret);
+        header('Content-Type: application/json');
+        return $ret;
+        echo $result;
     }
     function getFkey($fkey){
         $ret = $this->getColWhere("arg_id", "doc_func_argument", "func_id", $fkey);
