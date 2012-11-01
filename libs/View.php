@@ -103,7 +103,7 @@ class View {
                     echo"placeholder=\"".$placeholder."\"";
                 }
                 if($option != false){
-                    echo $option;
+                    echo "size=\"".$option;
                 }
                 echo "\"><br/>";   
             }
