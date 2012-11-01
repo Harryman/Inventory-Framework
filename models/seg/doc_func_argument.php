@@ -1,16 +1,18 @@
 <?php
 namespace models\seg;
-class Doc_function extends \libs\Model {
-    public $table = "doc_function";
+class Doc_func_argument extends \libs\Model {
+    public $table = "doc_func_argument";
+    public $key = "arg_id";
     function __construct() {
         parent::__construct();
     }
-     function insert($id){
-       $ret = $this->insertSeg(["func_id", "doc_id","func_name", "code", "description"],$id);
+    
+    function insert($id){
+       $ret = $this->insertSeg(["arg_id","func_id","arg","arg_desc"],$id);
        echo $ret; 
     }
     function get($id){
-        $ret = $this->getSeg("func_id", $id);
+        $ret = $this->getSeg($this->key, $id);
         echo $ret;
     }
     function getFkey($fkey){
@@ -18,6 +20,6 @@ class Doc_function extends \libs\Model {
         return $ret;
     }
     function del($id){
-        $this->delSeg("func_id", $id);
+        $this->delSeg($this->key, $id);
     }
 }

@@ -162,8 +162,8 @@ Btnset.prototype.save = function(){
             }
             var isPar = true;
         }
+        var stu = event.data.value;      
         if(go == true){
-            var stu = event.data.value;      
             $.ajax({
                 type: 'POST',
                 data: $(stu.seccon+" > #data form").serialize(),
