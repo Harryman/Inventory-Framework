@@ -220,44 +220,7 @@ Btnset.prototype.validator = function(parent){
     else{
         return true;
     }
-}
-    
- /*Btnset.prototype.validator = function(){
-    $this = this;
-    $(this.seccon+" > #data .u-fucked-up").removeClass("u-fucked-up")
-    $("#"+this.table+this.id+"validate").text("");
-    if(vald[this.table]){
-       $.each(vald[this.table], function(k,v){
-          flag = false;
-          if(v == "required"){
-              isgood = $($this.seccon +" > #data #"+k).val();
-              if(isgood == ""){
-                  $("#"+$this.table+$this.id+"validate").append("<strong>"+k+"</strong> is required<br/>");
-                  flag = true;
-                  $($this.seccon +" > #data #"+k).addClass("u-fucked-up");
-                }
-             }
-        });
-        if(flag == true){
-            $("#"+$this.table+$this.id+"validate").dialog({
-                 modal: true,
-                 buttons:{
-                     Ok: function(){
-                         $(this).dialog("close");
-                     }
-                 }
-             });
-             return false;
-            }
-            else{
-                return true;
-            }
-        }
-    else{
-        return true;
-    }
-}*/
-  
+}  
 Btnset.prototype.formFill = function(){
     var $this = this;
     $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
