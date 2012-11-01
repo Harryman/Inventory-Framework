@@ -120,6 +120,13 @@ class View {
             if($type =="hidden"){
                 echo"<input name=\"".$name."\" id=\"".$name."\" type=\"hidden\" value=\"".$label."\"/>";
             }
+            if($type == "checkbox"){
+                echo $label."<input type=\"checkbox\" name=\"".$name."\" id=\"$".$name." value=\"1\"/>";
+                if($placeholder){
+                   echo"<label for=\"".$name."\">".$placeholder."</label>";
+                }
+                echo"<br/>";
+            }
          //   echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
         }
 }
