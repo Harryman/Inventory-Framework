@@ -36,7 +36,7 @@ Btnset.prototype.add = function(callback, title, fkey){
     });
     $(this.btncon+" > #add").on('click',{value:this}, function(event){
         if(!event.data.value.addFkey){
-            isgood = event.data.value.validator(event.data.value.seccon);
+            isgood = event.data.value.validator("#"+event.data.value.id);
             if(isgood === true){
                 $.ajax({
                     type: 'POST',
@@ -153,7 +153,7 @@ Btnset.prototype.save = function(){
     $(this.btncon+" > #save").on('click',{value:this}, function(event){
         var go = true
         if(event.hasOwnProperty('originalEvent')){
-            isgood = event.data.value.validator(event.data.value.seccon);  
+            isgood = event.data.value.validator("#"+event.data.value.id);  
             if(isgood == true){
                 $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
             }
