@@ -15,8 +15,8 @@ class Doc_func_argument extends \libs\Model {
         $ret = $this->getSeg($this->key, $id);
         $result = json_encode($ret);
         header('Content-Type: application/json');
-        return $ret;
         echo $result;
+        return $ret;
     }
     function getFkey($fkey){
         $ret = $this->getColWhere("arg_id", "doc_func_argument", "func_id", $fkey);
