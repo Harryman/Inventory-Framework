@@ -3,19 +3,7 @@ namespace libs;
 class View {
 
 	function __construct() {
-	}
-
-	public function render($name, $noInclude = false){
-            if ($noInclude == true) {
-                require 'views/' . $name . '.php';	
-            }
-            else {
-                require 'views/header.php';
-                require 'views/' . $name . '.php';
-                require 'views/footer.php';	
-            }
-	}
-        
+	}      
         function start($class = null){
         echo "<div id=\"".$this->id ."\" >
                 <div id=\"".$this->table."\" class=\"".$class." text ui-widget-content ui-corner-all\">
@@ -30,11 +18,10 @@ class View {
           echo"<div id=\"data\">
           <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\"></div></h2>
             <div class=\"clearfloat\"></div>
-                  <div class=\"mar-left\">
-                <form>";
+                  <div class=\"mar-left\">";
         }
         function dataEnd(){
-            echo"</form></div></div>";
+            echo"</div></div>";
         }
         function scriptStart(){
             echo "<script>$(function(){

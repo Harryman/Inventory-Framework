@@ -40,7 +40,7 @@ Btnset.prototype.add = function(callback, title, fkey){
             if(isgood === true){
                 $.ajax({
                     type: 'POST',
-                    data: $(event.data.value.seccon+" #data form").serialize(),
+                    data: $(event.data.value.seccon+" > #data > div > *").serialize(),
                     url: urlbase+"seg/"+event.data.value.table+"/save/"+event.data.value.dbid,
                     success: function(fkey){
                         if(fkey == 0){
@@ -166,7 +166,7 @@ Btnset.prototype.save = function(){
         if(go == true){
             $.ajax({
                 type: 'POST',
-                data: $(stu.seccon+" > #data form").serialize(),
+                data: $(stu.seccon+" > #data > div > *").serialize(),
                 url: urlbase+"seg/"+stu.table+"/save/"+stu.dbid,
                 success: function(id){
                     if(id == 0){
@@ -194,7 +194,7 @@ Btnset.prototype.validator = function(parent){
         $.each(vald[t],function(k,v){
             if($(parent+" #"+t+" #"+k).length){
                 if(v == "required"){
-                    $("#"+t+" > #data form #"+k).each(function(p){
+                    $("#"+t+" > #data > div > * #"+k).each(function(p){
                         val =  $(this).val();
                         if(val == ""){
                             $("#validate").append("<strong>"+k+"</strong> is required<br/>");
@@ -225,7 +225,7 @@ Btnset.prototype.formFill = function(){
     var $this = this;
     $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
         $.each(data, function(k,v){
-            $($this.seccon+" > #data  #"+k).val(v);
+            $($this.seccon+" > #data > * #"+k).val(v);
         });
     });
 }
@@ -238,7 +238,7 @@ Btnset.prototype.dataFill = function(title){
                 $($this.hedcon).prepend(v);
             }
             else{
-                $($this.seccon+" > #data #"+k).text(v);
+                $($this.seccon+" > #data > * #"+k).text(v);
             }
         });
     });
