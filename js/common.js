@@ -170,16 +170,28 @@ Btnset.prototype.save = function(noProp){
                     if(id == 0){
                        id = stu.dbid;
                     }       
-                    $("#"+stu.id).slideUp("fast",function(){
-                        if(isPar == true){
-                            $.get(urlbase+"seg/"+stu.table+"/view/"+id ,function(data){
-                                $("#"+stu.id).replaceWith(data);
-                                $("#"+stu.id).hide();
-                                $("#"+stu.id).slideDown(function(){
+                    if(isPar == true){
+                        if(noProp == undefined){
+                            $("#"+stu.id).slideUp("fast",function(){    
+                                $.get(urlbase+"seg/"+stu.table+"/view/"+id ,function(data){
+                                    $("#"+stu.id).replaceWith(data);
+                                    $("#"+stu.id).hide();
+                                    $("#"+stu.id).slideDown(function(){
+                                    });
                                 });
                             });
                         }
-                    });
+                        else{
+                            $.get(urlbase+"seg/"+stu.table+"/data/"+stu.dbid ,function(data){
+                                $(stu.seccon+" > #data").slideUp("fast",function(){
+                                    $(stu.seccon+" > #data").replaceWith(data);
+                                    $(stu.seccon+" > #data").hide();
+                                    $(stu.seccon+" > #data").slideDown(function(){
+                                    });
+                                });
+                            });
+                        }
+                    }
                 }
             }); 
         }
