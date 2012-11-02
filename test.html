@@ -9,11 +9,38 @@
         <script src="http://192.168.1.150/js/common.js"></script>
     </head>
     <body>
-
+        <div id="1">
+            <input name="0" type="text" value="0"/>
+            <div style="display: none">
+                <input type="text" value="1" name="div1"/>
+                <div> this sis a div with nothing in it</div>
+                <div id="2">
+                  
+                        <input type="text" value="2" name="div2"/>
+                        <div id="3">
+                            <input type="text" value="3" name="div3"/>
+                        </div>
+                </div>
+                label<input type="checkbox" name="check" value ="false" id="hm"/><label> this is a label</label>
+               
+            </div>
+             <div id="btn">click</div>
+        </div>
 <script>
-    $(function(){
-    // icons = $.parseJSON(icojson);
-       alert(icons.add);
+    $(function(dr){
+    $("#btn").on('click',function(){
+        data = $("#1 > * > *").serialize();
+        alert(data);
+    })
+   $(this).on('ready',grr());       
+   function grr(hm){
+       if(hm == undefined){
+            alert("data evals true");
+        }
+        else{
+            alert(hm);
+        }
+   }
     });           
 
 </script>
