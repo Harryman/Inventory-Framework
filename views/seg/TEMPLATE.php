@@ -44,8 +44,8 @@ class XYZ extends \libs\View {
         $this->dataStart();
         echo"<div class=\"mar-left\">HTML FOR DISPLAY element with colum ids will have the data appended to it </div>";
         $this->scriptStart();
-        $ts = $this->newBtns(" > h2");
-        $this->btnEdit($ts);
+        $this->newBtns(" > h2");
+        $this->btnEdit();
         echo $this->handle.".dataFill(\"COLOMN NAME FOR HEADER\");";
         $this->scriptEnd();
         $this->dataEnd();
