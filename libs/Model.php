@@ -76,7 +76,7 @@ class Model {
                         $exarr[$idx] = $_POST[$val];
                     }
                     else{
-                        $exarr[$idx] = 1;
+                        $exarr[$idx] = 0;
                         }
                     $idx++;
                 }
