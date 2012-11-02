@@ -68,7 +68,7 @@ Btnset.prototype.add = function(callback, title, fkey){
      });
 }
 
-Btnset.prototype.edit = function(){
+Btnset.prototype.edit = function(noprop){
     $(this.btncon).append("<div id=\"edit\" title=\"edit\"></div>");
     $(this.btncon+" > #edit").button({
         icons:{
@@ -78,8 +78,9 @@ Btnset.prototype.edit = function(){
     });
     $(this.btncon+" > #edit").on('click',{value:this}, function(event){
         if(event.hasOwnProperty('originalEvent')){
-             $(event.data.value.seccon+" #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
-             var isPar = true;
+             if(noprop == "undefined"){
+                $(event.data.value.seccon+" #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
+             }
         }
         var stu = event.data.value;
         $.get(urlbase+"seg/"+stu.table+"/edit/"+stu.dbid ,function(data){
@@ -89,16 +90,10 @@ Btnset.prototype.edit = function(){
                     $(stu.seccon+" > #data").slideDown(function(){
                 });
             });
-     //   $(stu.btncon).children().remove();
-     //   stu.del();
-    //    stu.cancel();
-    //    stu.add(stu.addCallback,stu.addTitle,stu.addFkey);
-     //   stu.save(); 
         });
-  
     });        
 }
-Btnset.prototype.cancel = function(){
+Btnset.prototype.cancel = function(noprop){
     $(this.btncon).append("<div id=\"cancel\" title=\"cancel\"></div>");
     $(this.btncon+" > #cancel").button({
         icons:{
@@ -108,8 +103,9 @@ Btnset.prototype.cancel = function(){
     });
     $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
         if(event.hasOwnProperty('originalEvent')){
-            $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
-            var isPar = true;
+            if(noprop == "undefined"){
+                $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
+            }
         }
         var stu = event.data.value;
         $.get(urlbase+"seg/"+stu.table+"/data/"+stu.dbid ,function(data){
@@ -142,7 +138,7 @@ Btnset.prototype.del = function(){
       //  });   
     });
 }
-Btnset.prototype.save = function(){
+Btnset.prototype.save = function(noprop){
     $(this.btncon).append("<div id=\"save\" title=\"save\"></div>");
     $(this.btncon+" > #save").button({
         icons:{
@@ -155,7 +151,9 @@ Btnset.prototype.save = function(){
         if(event.hasOwnProperty('originalEvent')){
             isgood = event.data.value.validator("#"+event.data.value.id);  
             if(isgood == true){
-                $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
+                if(noprop == "undefined"){
+                    $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
+                }
             }
             else{
                 go = false
