@@ -68,7 +68,7 @@ Btnset.prototype.add = function(callback, title, fkey){
      });
 }
 
-Btnset.prototype.edit = function(noprop){
+Btnset.prototype.edit = function(noProp){
     $(this.btncon).append("<div id=\"edit\" title=\"edit\"></div>");
     $(this.btncon+" > #edit").button({
         icons:{
@@ -78,7 +78,7 @@ Btnset.prototype.edit = function(noprop){
     });
     $(this.btncon+" > #edit").on('click',{value:this}, function(event){
         if(event.hasOwnProperty('originalEvent')){
-             if(noprop == "undefined"){
+             if(noProp == undefined){
                 $(event.data.value.seccon+" #edit:not("+event.data.value.btncon+" > #edit)").trigger('click'); 
              }
         }
@@ -93,7 +93,7 @@ Btnset.prototype.edit = function(noprop){
         });
     });        
 }
-Btnset.prototype.cancel = function(noprop){
+Btnset.prototype.cancel = function(noProp){
     $(this.btncon).append("<div id=\"cancel\" title=\"cancel\"></div>");
     $(this.btncon+" > #cancel").button({
         icons:{
@@ -103,7 +103,7 @@ Btnset.prototype.cancel = function(noprop){
     });
     $(this.btncon+" > #cancel").on('click',{value:this}, function(event){
         if(event.hasOwnProperty('originalEvent')){
-            if(noprop == "undefined"){
+            if(noProp == undefined){
                 $(event.data.value.seccon+" #cancel:not("+event.data.value.btncon+" > #cancel)").trigger('click');
             }
         }
@@ -138,7 +138,7 @@ Btnset.prototype.del = function(){
       //  });   
     });
 }
-Btnset.prototype.save = function(noprop){
+Btnset.prototype.save = function(noProp){
     $(this.btncon).append("<div id=\"save\" title=\"save\"></div>");
     $(this.btncon+" > #save").button({
         icons:{
@@ -151,7 +151,7 @@ Btnset.prototype.save = function(noprop){
         if(event.hasOwnProperty('originalEvent')){
             isgood = event.data.value.validator("#"+event.data.value.id);  
             if(isgood == true){
-                if(noprop == "undefined"){
+                if(noProp == undefined){
                     $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
                 }
             }

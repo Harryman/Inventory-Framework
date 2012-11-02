@@ -38,25 +38,25 @@ class View {
             echo $handle.".add(\"".$callback."\",\"".$title."\",\"".$fkey."\");
                 ";
         }
-        function btnEdit($noProp = null $handle = NULL){ 
+        function btnEdit($noProp = null, $handle = NULL){ 
             if($handle == NULL){
                 $handle = $this->handle;
             }
-            echo $handle.".edit();
+            echo $handle.".edit(".$noProp.");
                 ";
         }
         function btnCancel($noProp = NULL, $handle = NULL){ 
             if($handle == NULL){
                 $handle = $this->handle;
             }
-            echo $handle.".cancel();
+            echo $handle.".cancel(".$noProp.");
                 ";
         }
         function btnSave($noProp = NULL, $handle = NULL){ 
             if($handle == NULL){
                 $handle = $this->handle;
             }
-            echo $handle.".save();
+            echo $handle.".save(".$noProp.");
                 ";
         }
         function btnDel($handle = NULL){ 
