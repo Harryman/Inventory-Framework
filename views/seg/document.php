@@ -27,9 +27,13 @@ class Document extends \libs\View {
         if($this->id < 9999999){
             $this->btnDel();
             $this->btnCancel();
+            $this->btnAdd("doc_function","Add a Function",$this->id);
+            $this->btnSave(true);
         }
+        else{
         $this->btnAdd("doc_function","Add a Function",$this->id);
         $this->btnSave();
+        }
         echo $this->handle.".formFill();";
         $this->scriptEnd();
         $this->dataEnd();      
@@ -44,8 +48,8 @@ class Document extends \libs\View {
         echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"description\"></div></div><br/>
             <div>Full Code:<div id=\"toggle_code\"></div><div class=\"code\" id=\"code\" style=\"display: none\">blah</div></div></div>";
         $this->scriptStart();
-        $ts = $this->newBtns(" > h2");
-        $this->btnEdit($ts);
+        $this->newBtns(" > h2");
+        $this->btnEdit(true);
         echo $this->handle.".dataFill(\"namespace\");
          $(\"#".$this->id." > #document > #data #toggle_code\").button();
                         $(\"#".$this->id." > #document > #data #toggle_code\").text(\"show\");

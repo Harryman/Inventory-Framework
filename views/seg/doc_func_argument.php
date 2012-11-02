@@ -42,8 +42,8 @@ class Doc_func_argument extends \libs\View {
         $this->dataStart();
         echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"arg_desc\"></div></div><br/></div>";
         $this->scriptStart();
-        $ts = $this->newBtns(" > h2");
-        $this->btnEdit($ts);
+        $this->newBtns(" > h2");
+        $this->btnEdit();
         echo $this->handle.".dataFill(\"arg\")";
         $this->scriptEnd();
         $this->dataEnd();

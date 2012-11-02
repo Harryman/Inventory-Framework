@@ -45,8 +45,8 @@ class Doc_function extends \libs\View {
         echo"<div class=\"mar-left\"><div>Description:<div class=\"textformat\" id=\"description\"></div></div><br/>
             <div>Full Code:<div id=\"toggle_code\"></div><div class=\"code\" id=\"code\" style=\"display: none\">blah</div></div></div>";
         $this->scriptStart();
-        $ts = $this->newBtns(" > h2");
-        $this->btnEdit($ts);
+        $this->newBtns(" > h2");
+        $this->btnEdit();
         echo $this->handle.".dataFill(\"func_name\");
          $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").button();
                         $(\"#".$this->id." > #".$this->table." > #data #toggle_code\").text(\"show\");
