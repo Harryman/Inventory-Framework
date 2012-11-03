@@ -7,9 +7,9 @@ class Model {
 	}
         
         protected function getAll($table){
-            $st = $this->db->prepare("SELECT * FROM ".$table." WHERE 1=1");
-            $st->execute();
-            return $st;
+            $st = $this->db->query("SELECT * FROM ".$table." WHERE 1=1");
+            $result = $st->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
         }
         
         protected function getAllWhere($table, $where, $is, $order_by = NULL, $ASCDESC = "ASC"){
