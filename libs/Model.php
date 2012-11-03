@@ -20,6 +20,7 @@ class Model {
                 $st = $this->db->prepare("SELECT * FROM ".$table." WHERE ".$where." = :is ORDER BY ".$order_by." ".$ASCDESC);            
             }
             $st->execute([':is'=>$is]);
+            return $st->fetchAll(\PDO::FETCH_ASSOC);
         }
         
         protected function getAllWhereLike($table, $where, $like){
