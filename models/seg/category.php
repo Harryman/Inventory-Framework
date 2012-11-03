@@ -7,7 +7,7 @@ class Category extends \libs\Model {
         parent::__construct();
     }
     
-    function getAllhm(){
+    function getCats(){
         $bottom = $this->db->query("SELECT `level` FROM category ORDER BY `level` DESC");
         $bottom = $bottom->fetch(\PDO::FETCH_NUM);
         $inc = 0;
