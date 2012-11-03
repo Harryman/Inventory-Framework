@@ -32,7 +32,6 @@ class Category extends \libs\Model {
             if(isset($par[0]['level'])){
                 $par['level'] = 0;
             }
-            var_dump($par);
             $lev = $par[0]['level'];
             $out[$lev] = $par;
             $go = $lev;
