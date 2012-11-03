@@ -4,7 +4,8 @@ class View {
 
 	function __construct() {
 	}      
-        function start($class = null){
+        function start($class = null,$seg = true){
+             $this->loadJs($seg);
         echo "<div id=\"".$this->id ."\" >
                 <div id=\"".$this->table."\" class=\"".$class." text ui-widget-content ui-corner-all\">
                    ";
@@ -13,15 +14,27 @@ class View {
         function end(){
             echo"</div></div>";
         }
+        function loadJs($seg = TRUE){
+            if($seg){
+                if(file_exists("js/seg/".$this->table.".js")){
+                    echo"<script src=\"".URL."js/seg/".$this->table.".js\"></script>";
+                }
+            }
+            else{
+                if(file_exists(URL."js/".$this->table.".js")){
+                    echo"<script src=\"".URL."js/".$this->table.".js\"/></script>";
+                }
+            }
+        }
   
         function dataStart($title = null){
           echo"<div id=\"data\">
           <h2 class=\"ui-widget-header ui-corner-all\">".$title."<div class=\"buttons\"></div></h2>
             <div class=\"clearfloat\"></div>
-                  <div class=\"mar-left\">";
+                  ";
         }
         function dataEnd(){
-            echo"</div></div>";
+            echo"</div>";
         }
         function scriptStart(){
             echo "<script>$(function(){
@@ -83,7 +96,7 @@ class View {
             
         }
         function inputField($type, $name, $label, $placeholder = false, $option= false ){
-           // echo "<div id=\"".$name."\" class=\"mar-left\">";
+            echo "<div id=\"".$name."\" class=\"mar-left\">";
             if($type == "text"){
                 echo $label." <input id=\"".$name."\" type=\"text\" name=\"".$name."\" class=\"text ui-widget-content ui-corner-all\"";
                 if($placeholder != false){
@@ -114,6 +127,6 @@ class View {
                 }
                 echo"<br/>";
             }
-         //   echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
+            echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
         }
 }

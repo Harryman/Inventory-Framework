@@ -36,7 +36,7 @@ Btnset.prototype.add = function(callback, title, fkey){
     });
     $(this.btncon+" > #add").on('click',{value:this}, function(event){
         if(!event.data.value.addFkey){
-            isgood = event.data.value.validator("#"+event.data.value.id);
+            isgood = event.data.value.validator(event.data.value.id,true);
             if(isgood === true){
                 $.ajax({
                     type: 'POST',
@@ -149,7 +149,7 @@ Btnset.prototype.save = function(noProp){
     $(this.btncon+" > #save").on('click',{value:this}, function(event){
         var go = true
         if(event.hasOwnProperty('originalEvent')){
-            isgood = event.data.value.validator("#"+event.data.value.id);  
+            isgood = event.data.value.validator(event.data.value.id,noProp);  
             if(isgood == true){
                 if(noProp == undefined){
                     $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
@@ -197,14 +197,21 @@ Btnset.prototype.save = function(noProp){
         }
    });
 }
-Btnset.prototype.validator = function(parent){
+Btnset.prototype.validator = function(parent,noprop){
     flag = false;
     $("#validate").empty();
+    $(".u-fucked-up").removeClass("u-fucked-up");
     $.each(vald,function(t){
         $.each(vald[t],function(k,v){
-            if($(parent+" #"+t+" #"+k).length){
+            if($("#"+parent+" #"+t+" #"+k).length){
+                if(noprop == true){
+                    var top = "#"+parent+" > #"+t;
+                }
+                else{
+                    var top ="#"+parent+" #"+t;
+                }
                 if(v == "required"){
-                    $("#"+t+" > #data > div > * #"+k).each(function(p){
+                    $(top+" > #data > div *#"+k).each(function(p){
                         val =  $(this).val();
                         if(val == ""){
                             $("#validate").append("<strong>"+k+"</strong> is required<br/>");
