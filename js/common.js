@@ -261,8 +261,24 @@ Btnset.prototype.dataFill = function(title){
     });
 }    
 
-  
-  
+function menuInput(selector, callback, init, name){
+    $.get(urlbase+callback+init,function(json){
+        if(!$.isEmptyObject(json)){
+            if(name!=undefined){
+               $(selector).append("<ul id='"+name+"'></ul>");
+            }
+            else{
+                $(selector).append("<ul></ul>");
+            }
+        }
+         $.each(json,function(i,n){
+            $(selector+" > ul").append("<li id='"+n.id+"'><a href='#'>"+n.name+"</a></li>");
+            out = selector+" > ul > li#"+n.id;
+            menuInput(out,callback,n.id);
+         });
+       
+    });
+}
 
 function inhrt(o){
     function F(){};
