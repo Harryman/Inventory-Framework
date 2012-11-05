@@ -56,4 +56,12 @@ class Category extends \libs\Model {
     function del($id){
         $this->delSeg($this->key, $id);
     }
+    function getFkey($fkey,$encode=TRUE){
+        $ret = $this->getAllWhere( "category", "parent_id", $fkey);
+        if($encode){
+            header('Content-Type: application/json');
+        echo json_encode($ret,JSON_FORCE_OBJECT);
+        }
+        return $ret;
+    }
 }
