@@ -162,6 +162,12 @@ Btnset.prototype.save = function(noProp){
         }
         var stu = event.data.value;      
         if(go == true){
+            if(stu.dbid == undefined){
+              idval = $(stu.seccon+" > #data > div > input#id").val();
+              if(idval != ""){
+                  stu.dbid = idval;
+              }
+            }
             $.ajax({
                 type: 'POST',
                 data: $(stu.seccon+" > #data > div > *").serialize(),
