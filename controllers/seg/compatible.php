@@ -15,16 +15,12 @@ class Compatible extends \libs\Controller {
         $this->add();
     }
     function add($fkey){
-        $this->compatibleM = new \models\seg\Compatible();
-        $this->compatibleV = new vs\Compatible();
         $this->compatibleV->add($fkey);
     }
     function edit($fkey){
         $this->add($fkey);
     }
     function view($id){
-        $this->compatibleM = new \models\seg\Compatible();
-        $this->compatibleV = new vs\Compatible();
         $this->compatibleV->view($id);
     }
     function data($id){
