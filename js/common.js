@@ -93,6 +93,25 @@ Btnset.prototype.edit = function(noProp){
         });
     });        
 }
+Btnset.prototype.editSeg = function(){
+    $("#"+this.id+" > #"+this.table+this.container+" > .buttons").append("<div id=\"editSeg\" title=\"edit\"></div>");
+    $("#"+this.id+" > #"+this.table+this.container+" > .buttons > #editSeg").button({
+        icons:{
+            primary: icons.edit
+        },
+        text: false
+    });
+    
+    $("#"+this.id+" > #"+this.table+this.container+" > .buttons > #editSeg").on('click',{value:this}, function(event){
+        var stu = event.data.value;
+        //$(stu.seccon).slideUp("fast",function(){
+            $(stu.seccon).after(function(){
+                $(this).load(urlbase+"seg/"+stu.table+"/edit/"+stu.dbid ,function(){
+                });
+            });
+        });
+    //});        
+}
 Btnset.prototype.cancel = function(noProp){
     $(this.btncon).append("<div id=\"cancel\" title=\"cancel\"></div>");
     $(this.btncon+" > #cancel").button({
@@ -277,14 +296,28 @@ function menuInput(selector, callback, init, name){
                 $(selector).append("<ul></ul>");
             }
         }
+        else{
+            $(selector).attr('title','bottom level');
+        }
          $.each(json,function(i,n){
-            $(selector+" > ul").append("<li id='"+n.id+"'><a href='#'>"+n.name+"</a></li>");
+            $(selector+" > ul").append("<li id='"+n.id+"'><a>"+n.name+"</a></li>");
             out = selector+" > ul > li#"+n.id;
             menuInput(out,callback,n.id);
          });
-       
     });
 }
+function prod_cat_set(selector,init){
+    $.get(urlbase+"/category/getfkey/"+init,function(json){
+        if(!$.isEmptyObject(json)){
+            $(selector).attr("id","na");
+        }
+         $.each(json,function(i,n){
+            $(selector+" > ul").append("<li id='"+n.id+"'><a href='#'>"+n.name+"</a></li>");
+            out = selector+" > ul > li#"+n.id;
+            prod_cat_set(out,n.id);
+         });
+    });
+    }
 
 function inhrt(o){
     function F(){};

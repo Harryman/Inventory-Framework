@@ -31,6 +31,10 @@ class Category extends \libs\Controller {
         $this->categoryV = new vs\category();
         $this->categoryV->data();
     }
+    function getParents($id){
+        $this->categoryM = new \models\seg\category();
+        $this->categoryM->getParents($id);
+    }
     function getcats(){
         $this->categoryM->getCats();
     }

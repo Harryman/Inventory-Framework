@@ -2,12 +2,12 @@
 namespace models\seg;
 class Category extends \libs\Model {
     public $table = "category";
-    public $key = "id";
+    public $key = "cat_id";
     function __construct() {
         parent::__construct();
     }
     
-    function getCats(){
+/*    function getCats(){
         $bottom = $this->db->query("SELECT `level` FROM category ORDER BY `level` DESC");
         $bottom = $bottom->fetch(\PDO::FETCH_NUM);
         $inc = 0;
@@ -20,7 +20,7 @@ class Category extends \libs\Model {
         echo json_encode($levels,JSON_FORCE_OBJECT);
         return $levels;
     }  
-    function getParents($parent_id){
+  function getParents($parent_id){
         $go = 15;
         while($go > 0 ){
             if($go == 15){
@@ -39,8 +39,7 @@ class Category extends \libs\Model {
         header('Content-Type: application/json');
         echo json_encode($out,JSON_FORCE_OBJECT);
         return $out;
-    }
-    
+    }*/
     function insert($id){
        $ret = $this->insertSeg([$this->key,"name","description","level","parent_id"],$id);
        echo $ret; 
@@ -61,6 +60,24 @@ class Category extends \libs\Model {
         if($encode){
             header('Content-Type: application/json');
         echo json_encode($ret,JSON_FORCE_OBJECT);
+        }
+        return $ret;
+    }
+    function getParents($id,$encode=TRUE){
+        $st = $this->db->prepare("SELECT * FROM category WHERE `id` = :id");
+        $st->execute(["id"=>$id]);
+        $parid = $st->fetch(\PDO::FETCH_ASSOC);
+        $int = $parid['parent_id'];
+        $out[] = [$parid['name']];
+        while($int > 0){
+            $st = $this->db->query("SELECT * FROM category WHERE id ='".$int."'");
+            $ret = $st->fetch(\PDO::FETCH_ASSOC);
+            $out[] = [$ret['name']];
+            $int = $ret['parent_id'];
+        }
+        if($encode){
+            header('Content-Type: application/json');
+        echo json_encode($out,JSON_FORCE_OBJECT);
         }
         return $ret;
     }

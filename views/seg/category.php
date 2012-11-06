@@ -31,7 +31,7 @@ class Category extends \libs\View{
         echo "<div id=\"test\" style=\"width:15%\">Parent:<input name=\"parent_id\" id=\"parent_id\" type=\"text\" value=\"\"/></div>";
         $this->scriptStart();
         echo "menuInput(\"#test\",\"seg/category/getfkey/\",0,\"menu\");";
-        echo "$(\"#test\").ajaxStop(function(){		
+        echo "$(\"#category\").ajaxStop(function(){	
             $( \"#menu\" ).menu({
 			select: function( event, ui ) {
 				var link = ui.item.attr(\"id\");
@@ -49,8 +49,7 @@ class Category extends \libs\View{
         $this->scriptEnd();
         $this->dataEnd();      
     }
-    function add(){
-       
+    function add(){       
     }
     function view(){
         $this->start();

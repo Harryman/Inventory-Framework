@@ -58,6 +58,13 @@ class View {
             echo $handle.".edit(".$noProp.");
                 ";
         }
+        function btnEditSeg($handle = NULL){ 
+            if($handle == NULL){
+                $handle = $this->handle;
+            }
+            echo $handle.".editSeg();
+                ";
+        }
         function btnCancel($noProp = NULL, $handle = NULL){ 
             if($handle == NULL){
                 $handle = $this->handle;
@@ -84,11 +91,16 @@ class View {
       //      echo"$.get(urlbase+\"seg/".$table."\"/view/1/"
       //  }
             
-        function newBtns($container,$inst = "1"){
-            $handle = $this->table.$this->id.$inst;
-            
-            echo $handle." = new Btnset(\"".$this->id."\",\"".$this->table."\",\"".$container."\");
-                ";
+        function newBtns($container,$id=null,$inst = "1"){
+            if($id == null){
+                $handle = $this->table.$this->id.$inst;
+                echo $handle." = new Btnset(\"".$this->id."\",\"".$this->table."\",\"".$container."\");";
+            }
+            else{
+                $handle = $this->table.$id.$inst;
+                echo $handle." = new Btnset(\"".$id."\",\"".$this->table."\",\"".$container."\");
+                    ";
+            }
             if($inst){
                 $this->handle = $handle;
             }
