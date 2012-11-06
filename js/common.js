@@ -104,13 +104,11 @@ Btnset.prototype.editSeg = function(){
     
     $("#"+this.id+" > #"+this.table+this.container+" > .buttons > #editSeg").on('click',{value:this}, function(event){
         var stu = event.data.value;
-        //$(stu.seccon).slideUp("fast",function(){
             $(stu.seccon).after(function(){
                 $(this).load(urlbase+"seg/"+stu.table+"/edit/"+stu.dbid ,function(){
-                });
             });
         });
-    //});        
+    });        
 }
 Btnset.prototype.cancel = function(noProp){
     $(this.btncon).append("<div id=\"cancel\" title=\"cancel\"></div>");
@@ -306,19 +304,6 @@ function menuInput(selector, callback, init, name){
          });
     });
 }
-function prod_cat_set(selector,init){
-    $.get(urlbase+"/category/getfkey/"+init,function(json){
-        if(!$.isEmptyObject(json)){
-            $(selector).attr("id","na");
-        }
-         $.each(json,function(i,n){
-            $(selector+" > ul").append("<li id='"+n.id+"'><a href='#'>"+n.name+"</a></li>");
-            out = selector+" > ul > li#"+n.id;
-            prod_cat_set(out,n.id);
-         });
-    });
-    }
-
 function inhrt(o){
     function F(){};
     F.prototype = o;
