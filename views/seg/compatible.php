@@ -22,7 +22,7 @@ class Compatible extends \libs\View {
 
     function view($fkey){
         echo"<div id=\"compatible\" class=\"ui-widget-content ui-corner-all\">
-                <h3 class=\"ui-widget-header ui-corner-all\">Categories<div class='buttons'><div id=\"edit\"></div></div></h3>
+                <h3 class=\"ui-widget-header ui-corner-all\">Compatible Parts<div class='buttons'><div id=\"edit\"></div></div></h3>
                 <div class='clearfloat'></div>
             </div>
             ";
