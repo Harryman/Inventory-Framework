@@ -15,14 +15,12 @@ class Prod_cat extends \libs\Controller {
         $this->add();
     }
     function add($fkey){
-        $this->prod_catV = new vs\prod_cat();  
         $this->prod_catV->add($fkey);
     }
     function edit($fkey){
         $this->add($fkey);
     }
     function view($id){
-        $this->prod_catV = new vs\prod_cat();
         $this->prod_catV->view($id);
     }
     function data($id){
