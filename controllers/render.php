@@ -12,7 +12,9 @@ class Render extends \libs\Controller {
     function renderSeg($toRend,$opt1 = null,$opt2 = null){
         $toRend = "\controllers\seg\\".$toRend;
         require_once'views/header.php';
+        echo"<div id=1>";
         $toRend::$opt1($opt2);
+        echo"</div>";
         require_once'views/footer.php';
     }
 }
