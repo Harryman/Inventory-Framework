@@ -7,7 +7,7 @@ class Compatible extends \libs\Model {
     }
     
     function insert(){
-       $this->db->query("INSERT INTO prod_cat (`p_id`,`compatible_id`) VALUES (\"".$_POST['p_id']."\",\"".$_POST['compatible_id']."\")");
+       $this->db->query("INSERT INTO compatible (`p_id`,`compatible_id`) VALUES (\"".$_POST['p_id']."\",\"".$_POST['compatible_id']."\")");
     }
     function get($id){
         $st = $this->db->query("SELECT `compatible_id` FROM compatible WHERE `p_id`= '".$id."'");

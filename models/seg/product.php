@@ -26,8 +26,9 @@ class Product extends \libs\Model {
         return $ret;
     }
     function ac($field){
+        $field = "%".$field."%";
         $st = $this->db->prepare("SELECT * FROM product WHERE `id` LIKE :field OR `short_name` LIKE :field  OR `part_num` LIKE :field");
-        $st->excute([":field"=> $field]);
+        $st->execute([":field"=> $field]);
         $result = $st->fetchAll(\PDO::FETCH_ASSOC);
         $i = 0;
         foreach($result as $iter){

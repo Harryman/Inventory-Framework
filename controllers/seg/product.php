@@ -51,7 +51,8 @@ class Product extends \libs\Controller {
         $this->ProductM->insert($id);     
     }
     
-    function ac($field){
-        $this->ProductM($field);
+    function ac(){
+        $field = $_GET['term'];
+        $this->ProductM->ac($field);
     }
 }

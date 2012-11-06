@@ -86,10 +86,6 @@ class View {
             echo $handle.".del();
                 ";
         }
-      //  function getFseg($table, $id){
-     //       $this->id = $fkey;
-      //      echo"$.get(urlbase+\"seg/".$table."\"/view/1/"
-      //  }
             
         function newBtns($container,$id=null,$inst = "1"){
             if($id == null){
@@ -141,4 +137,5 @@ class View {
             }
             echo"<div class=\"buttons\"></div><div class=\"clearfloat\"></div></div>";
         }
+        
 }
