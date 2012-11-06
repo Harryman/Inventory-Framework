@@ -5,7 +5,6 @@ class Prod_cat extends \libs\Model {
     function __construct() {
         parent::__construct();
     }
-    
     function insert(){
        $this->db->query("INSERT INTO prod_cat (`p_id`,`cat_id`) VALUES (\"".$_POST['p_id']."\",\"".$_POST['cat_id']."\")");
     }
@@ -20,8 +19,5 @@ class Prod_cat extends \libs\Model {
     function del(){
         $this->db->query("DELETE FROM prod_cat WHERE `p_id` =  '".$_POST['p_id']."' AND `cat_id` = '".$_POST['cat_id']."'");
     }
-    function getFkey($fkey){
-        $ret = $this->getColWhere("CHILD ID", "CHILD TABLE", "FOREIGN KEY COLMN", $fkey);
-        return $ret;
-    }
+
 }
