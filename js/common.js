@@ -304,6 +304,14 @@ function menuInput(selector, callback, init, name){
          });
     });
 }
+
+function prodAC(){
+    $(function(){
+        $(".prodac").autocomplete({
+            source: urlbase+"seg/product/ac"
+        });
+    });
+}
 function inhrt(o){
     function F(){};
     F.prototype = o;

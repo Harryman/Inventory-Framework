@@ -49,5 +49,9 @@ class Product extends \libs\Controller {
     }
     function insert($id){
         $this->ProductM->insert($id);     
-    }    
+    }
+    
+    function ac($field){
+        $this->ProductM($field);
+    }
 }
