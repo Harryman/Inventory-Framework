@@ -242,7 +242,7 @@ Btnset.prototype.dataFill = function(title){
         });
     });
 }    
-validator = function(parent,noprop){
+function validator(parent,noprop){
     flag = false;
     $("#validate").empty();
     $(".u-fucked-up").removeClass("u-fucked-up");
@@ -310,6 +310,40 @@ function prodAC(){
         $(".prodac").autocomplete({
             source: urlbase+"seg/product/ac"
         });
+    });
+}
+function editView(table,json,p_id){
+    $.get(urlbase+"html/seg/"+table+"/editView",function(ht){
+        if($.isEmptyObject(json)){
+            json.id = json;
+            json.p_id = p_id
+        }
+        $.each(json, function(n){
+            hm = $("<div />").html(ht).find("div:first").attr('id',n.id).end().html();
+            $.each(json[n], function(i,d){
+                hm = $("<div />").html(hm).find("#"+i).attr('value',d).end().html();
+            });
+            hl += hm;
+        });
+        return hl;
+    });
+}
+function dataView(tableView,json){
+    $.get(urlbase+"html/seg/"+tableView,function(ht){
+        if($.isEmptyObject(json)){
+            return "There were no results.";
+        }
+        if(ht == undefined){
+            return "Specified view does not exsist.";
+        }
+        $.each(json, function(n){
+            hm = $("<div />").html(ht).find("div:first").attr('id',n.id).end().html();
+            $.each(json[n], function(i,d){
+                hm = $("<div />").html(hm).find("#"+i).append(d).end().html();
+            });
+            hl += hm;
+        });
+        return hl;
     });
 }
 function inhrt(o){
