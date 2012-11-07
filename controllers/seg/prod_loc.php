@@ -15,16 +15,12 @@ class Prod_loc extends \libs\Controller {
         $this->add();
     }
     function add($fkey){
-        $this->prod_locM = new \models\seg\prod_loc();
-        $this->prod_locV = new vs\prod_loc();
         $this->prod_locV->add($fkey);
     }
     function edit($fkey){
         $this->add($fkey);
     }
     function view($id){
-        $this->prod_locM = new \models\seg\prod_loc();
-        $this->prod_locV = new vs\prod_loc();
         $this->prod_locV->view($id);
     }
     function data($id){

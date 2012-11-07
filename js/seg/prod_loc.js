@@ -17,11 +17,11 @@ var prod_loc = (function(){
             });
         });
         $(selector).on('click',function(event){
-            var compat = $("#"+p_id+" > #prod_loc #loc_id").val();
+            var compat = $("#"+p_id+" > #prod_loc #id").val();
             $.ajax({
                 type: 'POST',
                 url: urlbase+"seg/prod_loc/insert",
-                data: "p_id="+p_id+"&loc_id="+compat,
+                data: "p_id="+p_id+"&id="+compat,
                 success: function(){
                     $("#"+p_id+" > #prod_loc > #data").remove();
                     prod_loc.data(p_id,true);
@@ -34,10 +34,10 @@ var prod_loc = (function(){
         $.getJSON(urlbase+"seg/prod_loc/get/"+p_id,function(json){
             $.each(json,function(i,n){
                     if(button == undefined){
-                        $("#"+p_id+" > #prod_loc > #data").append("<div class='margin' id='"+n.loc_id+"'><div>"+n.loc_id+"</div></div>");
+                        $("#"+p_id+" > #prod_loc > #data").append("<div class='margin' id='"+n.id+"'><div>"+n.id+"</div></div>");
                     }
                     else{
-                        $("#"+p_id+" > #prod_loc > #data").append("<div class='margin' id='"+n.loc_id+"'><div class:'fltlft'>"+n.loc_id+"<div/><div class='buttons'><div id='del'></div></div></div><div class='clearfloat'></div>");
+                        $("#"+p_id+" > #prod_loc > #data").append("<div class='margin' id='"+n.id+"'><div class:'fltlft'>"+n.id+"<div/><div class='buttons'><div id='del'></div></div></div><div class='clearfloat'></div>");
                     }
             });
             if(button == true){
@@ -50,11 +50,11 @@ var prod_loc = (function(){
                     });
                     $("#"+p_id+" > #prod_loc #del").on('click',function(e){
                         var that = $(this);
-                        loc_id = $(this).parent().parent().parent().attr('id'); 
+                        id = $(this).parent().parent().parent().attr('id'); 
                         $.ajax({
                             type:'POST',
                             url: urlbase+"seg/prod_loc/delete",
-                            data: "p_id="+p_id+"&loc_id="+loc_id,
+                            data: "p_id="+p_id+"&id="+id,
                             success: function(){
                                 $(that).parent().parent().parent().remove();
                             }
