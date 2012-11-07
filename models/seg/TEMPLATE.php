@@ -1,28 +1,25 @@
 <?php
 namespace models\seg;
-class Document extends \libs\Model {
-    public $table = "document";
-    public $key = "key colomn";
+class TABLE extends \libs\Model {
+    public $table = "TABLE";
+    public $key = "id";
     function __construct() {
         parent::__construct();
     }
     
     function insert($id){
-       $ret = $this->insertSeg([$this->key,"ARRAY","OF","COLUMNS","NAMED THE SAME AS FIELD NAMES"],$id);
+       $ret = $this->insertSeg([$this->key,"p_id","product_id","qty"],$id);
        echo $ret; 
     }
     function get($id){
-        $ret = $this->getSeg($this->key, $id);
+        $st = $this->db->query("SELECT `id` FROM TABLE WHERE `p_id`= '".$id."'");
+        $ret = $st->fetchAll(\PDO::FETCH_ASSOC);
         $result = json_encode($ret);
         header('Content-Type: application/json');
         echo $result;
         return $ret;
     }
     function del($id){
-        $this->delSeg($this->key, $id);
-    }
-    function getFkey($fkey){
-        $ret = $this->getColWhere("CHILD ID", "CHILD TABLE", "FOREIGN KEY COLMN", $fkey);
-        return $ret;
+        $this->db->query("DELETE FROM TABLE WHERE `id` = '".$id."'");
     }
 }
