@@ -36,7 +36,7 @@ Btnset.prototype.add = function(callback, title, fkey){
     });
     $(this.btncon+" > #add").on('click',{value:this}, function(event){
         if(!event.data.value.addFkey){
-            isgood = event.data.value.validator(event.data.value.id,true);
+            isgood = validator(event.data.value.id,true);
             if(isgood === true){
                 $.ajax({
                     type: 'POST',
@@ -166,7 +166,7 @@ Btnset.prototype.save = function(noProp){
     $(this.btncon+" > #save").on('click',{value:this}, function(event){
         var go = true
         if(event.hasOwnProperty('originalEvent')){
-            isgood = event.data.value.validator(event.data.value.id,noProp);  
+            isgood = validator(event.data.value.id,noProp);  
             if(isgood == true){
                 if(noProp == undefined){
                     $(event.data.value.seccon+" #save:not("+event.data.value.btncon+" > #save)").trigger('click');
@@ -220,7 +220,29 @@ Btnset.prototype.save = function(noProp){
         }
    });
 }
-Btnset.prototype.validator = function(parent,noprop){
+Btnset.prototype.formFill = function(){
+    var $this = this;
+    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
+        $.each(data, function(k,v){
+            $($this.seccon+" > #data > * #"+k).val(v);
+        });
+    });
+}
+
+Btnset.prototype.dataFill = function(title){
+    var $this = this;
+    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid+"",function(data){
+        $.each(data, function(k,v){
+            if(k == title){
+                $($this.hedcon).prepend(v);
+            }
+            else{
+                $($this.seccon+" > #data > * #"+k).text(v);
+            }
+        });
+    });
+}    
+validator = function(parent,noprop){
     flag = false;
     $("#validate").empty();
     $(".u-fucked-up").removeClass("u-fucked-up");
@@ -261,28 +283,6 @@ Btnset.prototype.validator = function(parent,noprop){
         return true;
     }
 }  
-Btnset.prototype.formFill = function(){
-    var $this = this;
-    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid ,function(data){
-        $.each(data, function(k,v){
-            $($this.seccon+" > #data > * #"+k).val(v);
-        });
-    });
-}
-
-Btnset.prototype.dataFill = function(title){
-    var $this = this;
-    $.get(urlbase+"seg/"+$this.table+"/get/"+$this.dbid+"",function(data){
-        $.each(data, function(k,v){
-            if(k == title){
-                $($this.hedcon).prepend(v);
-            }
-            else{
-                $($this.seccon+" > #data > * #"+k).text(v);
-            }
-        });
-    });
-}    
 
 function menuInput(selector, callback, init, name){
     $.get(urlbase+callback+init,function(json){
