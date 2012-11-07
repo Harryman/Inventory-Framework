@@ -106,8 +106,12 @@ class Model {
             $st = $this->db->prepare("DELETE FROM `".$this->table."` WHERE `".$idField."` = :id");
             $st->execute([":id"=>$id]);
         }
-            
-            protected function jsRemove($id){// figure this out later 
-            
+        function getNormalizedFILES(){ 
+            $newfiles = array(); 
+            foreach($_FILES as $fieldname => $fieldvalue) 
+                foreach($fieldvalue as $paramname => $paramvalue) 
+                    foreach((array)$paramvalue as $index => $value) 
+                        $newfiles[$fieldname][$index][$paramname] = $value; 
+            return $newfiles; 
         }
 }
