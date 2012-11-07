@@ -114,4 +114,12 @@ class Model {
                         $newfiles[$fieldname][$index][$paramname] = $value; 
             return $newfiles; 
         }
+        
+        function getNextId($table){
+            $st = $this->db->query("SHOW TABLE STATUS LIKE '".$table."'");
+            $row = $st->fetch(\PDO::FETCH_ASSOC);
+            $nextId = $row['Auto_increment'];
+            echo $nextId;
+            return $nextId;
+        }
 }
