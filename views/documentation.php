@@ -9,7 +9,7 @@ class Documentation extends \libs\View {
     function search(){
         echo"<div id=\"search_document\" class=\" pad ui-widget-header ui-corner-all\">
                 <input class=\" fltlft ui-widget-content ui-corner-all\" type=\"text\" id=\"search\" length=\"150\" placeholder=\"Search by namespace\"></input>
-                <div class=\" fltlft\" id=\"search_submit\">Go</div>
+                <button class=\" fltlft\" id=\"search_submit\">Go</button>
                 <div class=\" fltrt\" id=\"add\" title=\"Add a new document to the documentation\"><a href=\"".URL."documentation/add\">Add Document</a></div>
                 <div class=\"clearfloat\"></div>
                  <script>
