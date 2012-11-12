@@ -40,11 +40,11 @@ class Pic extends \libs\Model {
                 $h1 = $h*$scale1;
                 $img1 = imagecreatetruecolor($w1, $h1);
                 imagecopyresampled($img1, $src_img,0,0,0,0,$w1,$h1,$w,$h);
-                imagejpeg($img1,'uploads/images/product/'.$pic_id.'_'.$base.'.jpg');
+                imagejpeg($img1, UP_DIR.'/images/product/'.$pic_id.'_'.$base.'.jpg');
                 $base = $base * 2;
                 imagedestroy($img1);
             }
-            imagejpeg($src_img,'uploads/images/product/'.$pic_id.'.jpg');
+            imagejpeg($src_img, UP_DIR.'/images/product/'.$pic_id.'.jpg');
             imagedestroy($src_img);
             $ret[] = $pic_id;
         }
