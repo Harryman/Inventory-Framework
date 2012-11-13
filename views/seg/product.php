@@ -19,6 +19,7 @@ class XYZ extends \libs\View {
         $this->edit();
         $this->end();
     }
+    function head()
     function edit($fkey){
         $this->dataStart("Product");
         $this->inputField("text", "id", "Part Number:", "New PN", 10);
@@ -41,7 +42,6 @@ class XYZ extends \libs\View {
         if($this->id < 99999999){
             $this->btnCancel();
         }
-        $this->btnAdd("doc_func_argument","Add an Argument",$this->id);
         $this->btnSave();
         echo $this->handle.".formFill();";
         $this->scriptEnd();

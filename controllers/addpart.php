@@ -6,6 +6,15 @@ class Addpart extends \libs\Controller {
     
     function __construct() {
         parent::__construct();
+        $this->product = new cs\Product();
+        $this->prod_loc = new cs\Prod_loc();
+        $this->prod_cat = new cs\Prod_cat();
+        $this->compatible = new cs\Compatible();
+        $this->related = new cs\Related();
+        $this->pic = new cs\Pic();
+        $this->external_pn = new cs\External_pn();
+        $this->assembly = new cs\Assembly();
+        
 
     }
     
