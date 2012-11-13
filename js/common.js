@@ -241,7 +241,102 @@ Btnset.prototype.dataFill = function(title){
             }
         });
     });
-}    
+}
+function Fbtn(table, f_id, id, selector){
+    this.f_id = f_id;
+    this.id = id;
+    this.table = table;
+    if(selector != undefined){
+        this.selector = selector;
+    }
+    else{
+        this.selector = "#"+this.f_id+" > #"+this.table+" > #data";
+    }
+    $(this.selector+" #"+this.id+" .buttons").buttonset();
+}
+Fbtn.prototype.del = function(){
+    $(this.selector+" #"+this.id+" > .buttons").append("<button id='del'></button>");
+    $(this.selector+" #"+this.id+" > .buttons #del")
+        .button({
+            icons:{
+                    primary: icons.del
+                },
+            text: false
+        })
+    .on('click',{value:this},function(event){
+        var stu = event.data.value;
+        $.ajax({
+            type:'POST',
+            url: urlbase+"/seg/"+stu.table+"/delete",
+            data: "id="+stu.id,
+            success: function(){
+                 $(stu.selector+" #"+stu.id)
+                    .slideUp(function(){
+                    $(this).remove();
+                    })
+            }
+        });
+    });
+}
+Fbtn.prototype.cancel = function(){
+    $(this.selector+" #"+this.id+" > .buttons").append("<button id='cancel'></button>");
+    $(this.selector+" #"+this.id+" > .buttons #cancel")
+        .button({
+            icons:{
+                primary: icons.cancel
+                },
+            text: false
+        })
+        .on('click',{value:this},function(event){
+            window[event.data.value.table].cancel(event.data.value.id,event.data.value.f_id);
+        });
+}
+Fbtn.prototype.save = function(){
+    $(this.selector+" #"+this.id+" > .buttons").append("<button id='save'></button>");
+    $(this.selector+" #"+this.id+" > .buttons #save")
+        .button({
+            icons:{
+                    primary: icons.save
+                },
+            text: false
+        })
+        .on('click',{value:this},function(event){
+            var stu = event.data.value;
+            if(validator(event.data.value.f_id)){
+                $.ajax({
+                    type:'POST',
+                    url: urlbase+"/seg/"+stu.table+"/insert",
+                    data:  $(stu.selector+" #"+stu.id+" *").serialize(),
+                    success: function(actid){
+                        window[stu.table].save(actid,stu.f_id);   
+                    }
+                });
+            }
+    });
+}
+Fbtn.prototype.edit = function(){
+    $(this.selector+" > * > .buttons:empty").append("<button style='display:none' id='edit'></button>");
+    $(this.selector+" > * > .buttons #edit")
+        .button({
+            icons:{
+                    primary: icons.edit
+                },
+            text: false
+        })
+        .on('click',{value:this},function(event){
+            var stu = event.data.value;
+            id = $(this).parent().parent().attr('id');
+            window[stu.table].edit(id,stu.f_id);
+
+        });
+    $(this.selector+" > div").on('mouseenter',function(){
+        $(this).find("#edit").show();
+    })
+    $(this.selector+" > div").on('mouseleave',function(){
+        $(this).find("#edit").hide();
+    })
+}
+    
 function validator(parent,noprop){
     flag = false;
     $("#validate").empty();
@@ -313,38 +408,44 @@ function prodAC(){
     });
 }
 function editView(table,json,p_id){
-    $.get(urlbase+"html/seg/"+table+"/editView",function(ht){
-        if($.isEmptyObject(json)){
-            json.id = json;
-            json.p_id = p_id
-        }
-        $.each(json, function(n){
-            hm = $("<div />").html(ht).find("div:first").attr('id',n.id).end().html();
-            $.each(json[n], function(i,d){
-                hm = $("<div />").html(hm).find("#"+i).attr('value',d).end().html();
+    var hl = "";
+    $.ajax({
+        url: urlbase+"html/seg/"+table+"/editView.html",
+        async: false,
+        success: function(ht){
+            $.each(json, function(n){
+                hm = $("<div />").html(ht).find("div:first").attr('id',json[n].id).end().html();
+                $.each(json[n], function(i,d){
+                    hm = $("<div />").html(hm).find("#"+i).attr('value',d).end().html();
+                });
+                hl += hm;
             });
-            hl += hm;
-        });
-        return hl;
+        }
     });
+    return hl;
 }
 function dataView(tableView,json){
-    $.get(urlbase+"html/seg/"+tableView,function(ht){
-        if($.isEmptyObject(json)){
-            return "There were no results.";
-        }
-        if(ht == undefined){
-            return "Specified view does not exsist.";
-        }
-        $.each(json, function(n){
-            hm = $("<div />").html(ht).find("div:first").attr('id',n.id).end().html();
-            $.each(json[n], function(i,d){
-                hm = $("<div />").html(hm).find("#"+i).append(d).end().html();
+    var hl = "";
+    $.ajax({
+        url: urlbase+"html/seg/"+tableView,
+        async: false,
+        success: function(ht){
+            if($.isEmptyObject(json)){
+                return "There were no results.";
+            }
+            if(ht == undefined){
+                return "Specified view does not exsist.";
+            }
+            $.each(json, function(n){
+                hm = $("<div />").html(ht).find("div:first").attr('id',json[n].id).end().html();
+                $.each(json[n], function(i,d){
+                    hm = $("<div />").html(hm).find("#"+i).append(d).end().html();
+                });
+                hl += hm;
             });
-            hl += hm;
-        });
-        return hl;
+        }
     });
+            return hl;
 }
 function inhrt(o){
     function F(){};

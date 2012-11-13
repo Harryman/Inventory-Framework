@@ -89,11 +89,11 @@ class View {
             
         function newBtns($container,$id=null,$inst = "1"){
             if($id == null){
-                $handle = $this->table.$this->id.$inst;
+                $handle = $this->table.$inst;
                 echo $handle." = new Btnset(\"".$this->id."\",\"".$this->table."\",\"".$container."\");";
             }
             else{
-                $handle = $this->table.$id.$inst;
+                $handle = $this->table.$inst;
                 echo $handle." = new Btnset(\"".$id."\",\"".$this->table."\",\"".$container."\");
                     ";
             }

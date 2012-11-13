@@ -23,7 +23,10 @@ class Part extends \libs\Controller {
         $this->partV->head();
         $this->partV->add($id);
     }
-    function data($id){
+    function view($id){
+        $this->partV = new vs\Part();
+        $this->partV->head();
+        $this->partV->add($id);
         $this->partV->data($id);
     }
     function delete(){
@@ -39,10 +42,14 @@ class Part extends \libs\Controller {
     }
     public function getData($id){
         $this->partM = new \models\seg\part();
-        $this->partM->getData($this->table);
-        
+        $this->partM->getData($id);
+    }
+    public function getAllData($p_id){
+        $this->partM = new \models\seg\part();
+        $this->partM->getAllData($p_id);
     }
     function insert(){
-        $this->partM->insert();     
+        $id = $_POST['id'];
+        $this->partM->insert($id);     
     }    
 }

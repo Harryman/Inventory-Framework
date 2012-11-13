@@ -21,7 +21,8 @@ class Part extends \libs\View {
     }
     function add($fkey){
         $this->scriptStart();
-        echo $this->table.".add(".$fkey.");";
+        echo $this->table.".add(".$fkey.");
+            ";
         $this->scriptEnd();
     }
     function edit($id){
@@ -31,7 +32,7 @@ class Part extends \libs\View {
     }
     function data($fkey){
         $this->scriptStart();
-        
+        echo $this->table.".data(".$fkey.")";
         $this->scriptEnd();
     }
 }

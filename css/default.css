@@ -31,6 +31,9 @@ h1, h2, h3, h4, h5, h6, p {
         padding-left: 7px;
  /* adding the padding to the sides of the elements within the blocks, instead of the block elements themselves, gets rid of any box model math. A nested block with side padding can also be used as an alternate method. */
 }
+h3{
+    margin-bottom: 0px;
+}
 a img { /* this selector removes the default blue border displayed in some browsers around an image when it is surrounded by a link */
 	border: none;
 }
