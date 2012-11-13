@@ -19,12 +19,10 @@ class Part extends \libs\Controller {
         $this->add($fkey);
     }
     function add($id){
-        $this->partV = new vs\Part();
         $this->partV->head();
         $this->partV->add($id);
     }
     function view($id){
-        $this->partV = new vs\Part();
         $this->partV->head();
         $this->partV->add($id);
         $this->partV->data($id);
@@ -37,15 +35,12 @@ class Part extends \libs\Controller {
         $this->partM->get($id);
     }
     public function getNextId(){
-        $this->partM = new \models\seg\part();
         $this->partM->getNextId($this->table);
     }
     public function getData($id){
-        $this->partM = new \models\seg\part();
         $this->partM->getData($id);
     }
     public function getAllData($p_id){
-        $this->partM = new \models\seg\part();
         $this->partM->getAllData($p_id);
     }
     function insert(){

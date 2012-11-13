@@ -416,6 +416,7 @@ function editView(table,json,p_id){
             $.each(json, function(n){
                 hm = $("<div />").html(ht).find("div:first").attr('id',json[n].id).end().html();
                 $.each(json[n], function(i,d){
+                    hm = $("<div />").html(hm).find("#"+i).text(d).end().html();
                     hm = $("<div />").html(hm).find("#"+i).attr('value',d).end().html();
                 });
                 hl += hm;
