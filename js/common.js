@@ -242,6 +242,9 @@ Btnset.prototype.dataFill = function(title){
         });
     });
 }
+
+
+
 function Fbtn(table, f_id, id, selector){
     this.f_id = f_id;
     this.id = id;
@@ -302,11 +305,11 @@ Fbtn.prototype.save = function(){
         })
         .on('click',{value:this},function(event){
             var stu = event.data.value;
-            if(validator(event.data.value.f_id)){
+            if(validator(event.data.value.id)){
                 $.ajax({
                     type:'POST',
                     url: urlbase+"/seg/"+stu.table+"/insert",
-                    data:  $(stu.selector+" #"+stu.id+" *").serialize(),
+                    data:  $(stu.selector+" #"+stu.id+" > *, "+stu.selector+" #"+stu.id+" > * > *").serialize(),
                     success: function(actid){
                         window[stu.table].save(actid,stu.f_id);   
                     }
@@ -348,7 +351,7 @@ function validator(parent,noprop){
                     var top = "#"+parent+" > #"+t;
                 }
                 else{
-                    var top ="#"+parent+" #"+t;
+                    var top = "#"+parent+" #"+t;
                 }
                 if(v == "required"){
                     $(top+" > #data > div *#"+k).each(function(p){
@@ -418,6 +421,9 @@ function editView(table,json,p_id){
                 $.each(json[n], function(i,d){
                     hm = $("<div />").html(hm).find("#"+i).text(d).end().html();
                     hm = $("<div />").html(hm).find("#"+i).attr('value',d).end().html();
+                    if(d == 1){
+                        hm = $("<div />").html(hm).find("#"+i+"[type='checkbox']").prop('checked',true).end().html();
+                    }
                 });
                 hl += hm;
             });
