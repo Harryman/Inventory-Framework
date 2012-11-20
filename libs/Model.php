@@ -72,13 +72,18 @@ class Model {
                 $colstr .= "`".$val."`,";
                 $valstr .= "?,"; 
                 if($col[0] != $val){
-                    $upstr .= "`".$val."` = VALUES(`".$val."`) ,";
-                    if(isset($_POST[$val])){
-                        $exarr[$idx] = $_POST[$val];
+                    if($val == 'date'){
+                        $exarr[$idx] = date("Y-m-d H:i:s"); 
                     }
                     else{
-                        $exarr[$idx] = 0;
+                        $upstr .= "`".$val."` = VALUES(`".$val."`) ,";
+                        if(isset($_POST[$val])){
+                            $exarr[$idx] = $_POST[$val];
                         }
+                        else{
+                            $exarr[$idx] = 0;
+                            }
+                    }
                     $idx++;
                 }
                 else{
