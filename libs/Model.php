@@ -127,4 +127,11 @@ class Model {
             echo $nextId;
             return $nextId;
         }
+        function unique($table,$col,$value){
+            $st = $this->db->prepare("SELECT count(*) FROM `".$table."` WHERE `".$col."` = :val");
+            $st->execute(['val'=>$value]);
+            $rows = $st->fetch(\PDO::FETCH_NUM);
+            echo $rows[0];
+            return $rows[0];
+        }
 }

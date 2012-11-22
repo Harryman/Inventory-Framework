@@ -295,7 +295,7 @@ Fbtn.prototype.cancel = function(){
         });
 }
 Fbtn.prototype.save = function(){
-    $(this.selector+" #"+this.id+" > .buttons").append("<button id='save'></button>");
+    $(this.selector+" #"+this.id+" > .buttons").append("<button id='save' title='save'></button>");
     $(this.selector+" #"+this.id+" > .buttons #save")
         .button({
             icons:{
@@ -340,31 +340,61 @@ Fbtn.prototype.edit = function(){
     })
 }
     
-function validator(parent,noprop){
+function validator(parent,noprop,isBase){
     flag = false;
     $("#validate").empty();
     $(".u-fucked-up").removeClass("u-fucked-up");
     $.each(vald,function(t){
         $.each(vald[t],function(k,v){
-            if($("#"+parent+" #"+t+" #"+k).length){
-                if(noprop == true){
-                    var top = "#"+parent+" > #"+t;
-                }
-                else{
-                    var top = "#"+parent+" #"+t;
-                }
-                if(v == "required"){
-                    $(top+" > #data > div *#"+k).each(function(p){
-                        val =  $(this).val();
+                if($("#"+parent+" #"+t+" #"+k).length){
+                    if(noprop == true){
+                        var top = "#"+parent+" > #"+t;
+                    }
+                    else{
+                        var top = "#"+parent+" #"+t;
+                    }
+                    if(v == "required"){
+                        $(top+" > #data > div *#"+k).each(function(p){
+                            var val =  $(this).val();
+                            if(val == ""){
+                                $("#validate").append("<strong>"+k+"</strong> is required<br/>");
+                                flag = true;
+                                $(this).addClass("u-fucked-up");
+                            }
+                        });
+                    }
+                    if(v == "unique"){
+                         $(top+" > #data > div *#"+k).val();
+                         $.get(urlbase+"/seg/product/unique/"+noprop+"/"+k+"/"+val, function(data){
+                             if(data > 0){
+                                $("#validate").append("<strong>"+k+"</strong> Must Be Unique<br/>");
+                                flag = true;
+                                $(top+" > #data > div *#"+k).addClass("u-fucked-up");
+                             }
+                         });
+                    }
+                 }
+                 else if(isBase == true){
+                     if(v == "required"){
+                        var val = $("#"+parent+" > *#"+k+", #"+parent+" > * > *#"+k).val();
                         if(val == ""){
                             $("#validate").append("<strong>"+k+"</strong> is required<br/>");
                             flag = true;
                             $(this).addClass("u-fucked-up");
                         }
-                    });
-                }
-             }
-        });
+                    }
+                    if(v == "unique"){
+                         var val = $("#"+parent+" > *#"+k+", #"+parent+" > * > *#"+k).val();
+                         $.get(urlbase+"/seg/product/unique/"+noprop+"/"+k+"/"+val, function(data){
+                             if(data > 0){
+                                $("#validate").append("<strong>"+k+"</strong> Must Be Unique<br/>");
+                                flag = true;
+                                $("#"+parent+" > *#"+k+", #"+parent+" > * > *#"+k).addClass("u-fucked-up");
+                            }
+                         });
+                    }
+                 }
+            });
     });
     if(flag == true){
         $("#validate").dialog({
